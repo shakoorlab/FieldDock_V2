@@ -1,0 +1,359 @@
+:root {
+  font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: #000;
+}
+
+.gradient-overlay {
+  height: 100%;
+  border-radius: 8px;
+  margin-top: 0.3px;
+  padding-top: 2rem;
+  background-color: rgba(0, 0, 0, 0);
+  background-image: radial-gradient(
+      circle at 50% 0,
+      rgba(68, 68, 68, 0.6),
+      #020202 79%,
+      rgba(0, 40, 53, 0.66)
+    ),
+    linear-gradient(rgba(1, 0, 15, 0.89), rgba(1, 0, 15, 0.89));
+}
+.main-grid {
+  display: grid;
+  width: 81vw;
+  height: 100%;
+  grid-row-gap: 3rem;
+  grid-template-rows: 9rem 6rem 14rem 16rem 1fr; /* Use 1fr for the last row to take the remaining space */
+  align-content: start;
+  margin: auto; /* Centers the grid horizontally */
+  grid-column-gap: 2.5rem;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-auto-columns: 1fr;
+  grid-auto-flow: row;
+}
+
+.row-content {
+  display: grid;
+  grid-template-rows: 1fr 1rem 1fr; /* 1fr for content, 1rem for the gap, 1fr for content */
+  width: 100%;
+  height: 100%;
+}
+
+.menu-bottom-row {
+  display: flex; /* Use flexbox to align children */
+  flex-direction: column; /* Stack children vertically */
+  justify-content: flex-end; /* Align children to the end (bottom) of the container */
+  align-items: center; /* Center children horizontally */
+  height: 100%; /* Take the full height to allow flexbox to position children */
+}
+
+/* //?logo and menu start */
+
+.logo-svg {
+  max-width: 100%;
+  vertical-align: middle;
+  display: inline-block;
+}
+
+.fielddock-select-menu,
+.table-select-menu {
+  width: 100%;
+  height: 55%;
+  border: 1px solid #474a4e;
+  color: rgba(0, 168, 177, 0.65);
+  background-color: rgba(0, 0, 0, 0);
+  border-radius: 4px;
+  margin-bottom: 0;
+  padding: 0 0 0 0.8em;
+  font-size: 1rem;
+  box-shadow: 0 7px 5px 1px rgba(0, 0, 0, 0.2);
+}
+
+/* //?user name and system info start */
+
+.row-content.row-2-custom {
+  grid-template-rows: 25% 75%;
+}
+
+.user-action-container {
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  gap: 1rem; /* Spacing between the username box and the logout button */
+}
+
+.active-user-name,
+.log-out-button {
+  white-space: nowrap;
+  background-color: rgba(0, 0, 0, 0);
+  border-radius: 4px;
+  justify-content: center;
+  align-items: center;
+  padding: 0 0.5em;
+  font-size: 0.85rem;
+  display: flex;
+  box-shadow: 0 7px 5px 1px rgba(0, 0, 0, 0.2);
+}
+.active-user-name {
+  width: 60%;
+  height: 87%;
+  border: 1px solid rgba(0, 242, 255, 0.25);
+  color: #48f7f5;
+}
+
+.log-out-button {
+  width: 25%;
+  height: 90%;
+  border: 1px solid #25c0e9;
+  color: #25c0e9;
+}
+
+.device-info {
+  display: flex;
+  flex-direction: column; /* Stacks flex items vertically */
+  justify-content: flex-end; /* Aligns the content to the bottom */
+  align-items: center; /* Centers the content horizontally */
+  height: 100%;
+  width: 100%;
+  text-align: center; /* Centers the text lines */
+}
+
+.device-reading {
+  font-size: 0.85rem;
+  color: #fff;
+}
+.device-date-time,
+.device-coordinates {
+  font-size: 0.9rem;
+  margin-top: 5px;
+  color: #48f7f5;
+}
+
+.device-gps {
+  margin-top: 5px;
+  font-size: 0.85rem;
+  color: #fff;
+}
+
+/* //?screen toggle buttons start */
+
+.screen-toggle-buttons-container-top,
+.screen-toggle-buttons-container-bottom {
+  display: flex;
+  justify-content: space-between;
+  height: 100%;
+}
+.screen-toggle-buttons-container-top {
+  align-items: flex-start;
+  height: 90%; /* //! I put this here because the icons in bottom row are smaller than ones in top, so had to make them look more even */
+}
+.screen-toggle-buttons-container-bottom {
+  align-items: flex-end;
+}
+
+.toggle-button {
+  flex: 1; /* Each button will take up an equal amount of space */
+  border: 1px solid #797979;
+  margin: 0 4px; /* Spacing between buttons; adjust as needed */
+  height: 80%;
+  background-color: transparent;
+  border-radius: 4px;
+  box-shadow: 0 7px 5px 1px rgba(0, 0, 0, 0.5);
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  opacity: 45%;
+}
+.toggle-button-icon {
+  object-fit: contain;
+  width: 100%;
+  max-height: 80%;
+}
+.toggle-imaging {
+  object-fit: contain;
+  width: 75%;
+  max-height: 70%;
+}
+.toggle-imaging-unactive {
+  object-fit: contain;
+  max-height: 75%;
+}
+/* //?SECOND ROW STARTS */
+.row-parent-box {
+  position: relative; /* Needed for absolute positioning of the title box */
+  border: 0.5px solid #474a4e;
+  border-radius: 4px;
+  background: linear-gradient(1deg, rgba(0, 0, 0, 0), #1b1b1b);
+  box-shadow: 0 7px 5px 1px rgba(0, 0, 0, 0.2);
+  padding-top: 40px; /* Adjust based on the height of your title box */
+  display: flex;
+  align-items: center; /* Align items vertically */
+  justify-content: space-around; /* Space out child elements */
+  padding: 20px;
+}
+
+.title-box {
+  position: absolute; /* Position it relative to its parent */
+  top: -10px; /* Half the height of the title box to move it above the parent box */
+  left: 50%; /* Center horizontally */
+  transform: translateX(-50%); /* Offset by half its width to truly center it */
+  background-color: #212124;
+  color: #48f7f5;
+  padding: 3px 8px;
+  border: 0.5px solid #474a4e;
+  border-radius: 4px;
+  font-size: 0.93rem;
+}
+
+/* //? Growing degree days starts  */
+.input-group {
+  width: 100%;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.input-group input,
+.input-group button {
+  width: 25%; /* Set a fixed width */
+  height: 40px; /* Set a fixed height */
+  text-align: center;
+  border-radius: 4px;
+  border: 0.5px solid #474a4e;
+  background-color: transparent;
+  margin: 0 8px; /* Add some space between elements */
+  font-size: 0.75rem;
+}
+.input-group input::placeholder {
+  color: rgba(0, 168, 177, 0.65);
+}
+
+.input-group button {
+  cursor: pointer;
+  border: 1px solid #48f7f5;
+  color: #48f7f5;
+  font-weight: bold;
+}
+
+.data-display {
+  background-color: transparent;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 80%;
+  margin-top: 10px;
+}
+
+.data-label,
+.data-value {
+  margin: 2px 0; /* Slight margin between the text elements */
+}
+.data-label {
+  color: rgba(0, 242, 255, 0.65);
+  font-size: 0.85rem;
+}
+.data-value {
+  color: #333333;
+  font-size: 1rem;
+}
+
+/* //? system status */
+
+.status-columns {
+  display: flex;
+  justify-content: space-around; /* This will space the columns evenly */
+  width: 100%; /* Ensures the columns span the entire width of the parent */
+}
+
+.status-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* This will distribute space between the items in the column */
+}
+
+.status-item {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px; /* Adds space between status items, adjust as needed */
+}
+
+.status-label {
+  font-size: 0.85rem;
+  color: rgba(0, 168, 177, 0.65);
+}
+
+.status-value {
+  margin-left: 15px; /* Adjust as needed */
+  font-size: 0.85rem;
+  font-weight: bold;
+  color: #48f7f5;
+}
+
+.status-charging {
+  color: #48f7f5; /* Or any other color indicating charging status */
+}
+
+.cellular-indicator {
+  display: flex;
+  gap: 5px;
+}
+
+.signal-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #555; /* Non-active color */
+}
+
+.signal-dot.active {
+  background-color: rgba(0, 168, 177, 0.65);
+}
+
+/* //? misc start */
+.table-parent {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+}
+.menu-parent {
+  margin-top: 10px;
+  height: 30px;
+  width: 95%;
+  display: flex;
+  justify-content: flex-start;
+}
+/* //* table-select-menu shares css with fielddock-select-menu in navbar */
+.table-select-menu {
+  width: 100%;
+  height: 100%;
+  font-size: 0.8rem;
+}
+.svg-container {
+  height: 100%;
+  width: 100%;
+}
+.drone-svg,
+.body-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.environmental-conditions-box {
+  grid-column: 3 / 4; /* Span all 3 columns */
+  grid-row: 3 / 5; /* Now spans the height of two rows */
+}
+
+/* //?MEDIA QUERIES START */
+@media screen and (max-width: 768px) {
+  .main-grid {
+    display: block;
+  }
+}
