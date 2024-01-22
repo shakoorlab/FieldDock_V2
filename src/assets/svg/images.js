@@ -22,8 +22,9 @@ import UsersActive from "./users_active.svg";
 import DownloadActive from "./download_active.svg";
 
 //?LARGE DIAGRAM SVGS
-import DroneSVGDiagram from "../svg/Drone_FieldDock.svg";
-import FieldDockDiagram from "../svg/FieldDock_Body.svg";
+import DroneSVGDiagram from "./Drone_FieldDock.svg?react";
+import FieldDockDiagram from "./FieldDock_Body.svg?react";
+import FieldDockLogo from "./FieldDock-Logo.svg";
 
 export {
   IndexNotActive,
@@ -48,4 +49,5 @@ export {
   DownloadActive,
   DroneSVGDiagram,
   FieldDockDiagram,
+  FieldDockLogo,
 };
