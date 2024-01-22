@@ -1,5 +1,5 @@
 import React from "react";
-import FieldDockLogo from "/FieldDock-Logo.svg";
+import FieldDockLogo from "../../assets/svg/images";
 
 function Navbar() {
   return (
