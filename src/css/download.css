@@ -1,0 +1,42 @@
+.download-input-group {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+}
+
+.download-input-group input,
+.download-input-group button {
+  width: 30%; /* Set a fixed width */
+  height: 45px; /* Set a fixed height */
+  text-align: center;
+  border-radius: 4px;
+  border: 0.5px solid #474a4e;
+  background-color: transparent;
+  margin: 0 8px; /* Add some space between elements */
+  font-size: 0.75rem;
+  box-shadow: 0 7px 5px 1px rgba(0, 0, 0, 0.2);
+}
+.download-input-group input::placeholder {
+  color: rgba(0, 168, 177, 0.65);
+}
+
+.download-input-group button {
+  cursor: pointer;
+  border: 1px solid #48f7f5;
+  color: #48f7f5;
+  font-weight: bold;
+  box-shadow: 0 7px 5px 1px rgba(0, 0, 0, 0.2);
+}
+.download-full-width-box {
+  grid-column: 2 / -1; /* Span the full width */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  position: relative;
+  border-radius: 4px;
+  border: 0.5px solid #474a4e;
+  box-shadow: 0 7px 5px 1px rgba(0, 0, 0, 0.2);
+}

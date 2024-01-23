@@ -1,0 +1,76 @@
+.two-column-grid {
+  display: grid;
+  width: 81vw; /* Set the width of the grid container to match your navbar */
+  grid-template-columns: repeat(2, 1fr); /* 2 columns with equal sizing */
+  grid-gap: 100px; /* Adjust the space as needed */
+  row-gap: 50px; /* Decreased space between rows */
+  margin: 0 auto; /* Center the grid in the parent element */
+}
+
+.grid-row {
+  display: contents;
+}
+
+.box,
+.full-width-box {
+  background: transparent;
+  color: #fff;
+  padding: 20px;
+  border: 0.5px solid #474a4e;
+  border-radius: 4px;
+  box-shadow: 0 7px 5px 1px rgba(0, 0, 0, 0.2);
+}
+
+.box {
+  display: flex; /* Align children of .box */
+  align-items: center; /* Center children vertically */
+  justify-content: space-between; /* Add space between the elements */
+  position: relative;
+}
+
+.content-container {
+  display: flex; /* Use flexbox to align p and select side by side */
+  align-items: center; /* Center items vertically */
+  justify-content: flex-start; /* Align items to the start */
+  width: 100%; /* Make sure the container takes up all available width */
+}
+
+.content-container p {
+  margin-right: 10px;
+  flex-grow: 1; /* Allow the paragraph to grow and fill available space */
+  color: #48f7f5;
+  font-size: 0.85rem;
+}
+
+.content-container select {
+  /* Add custom styles for your select element here */
+  padding: 10px; /* Example padding */
+  margin: 0; /* Remove default margin */
+  background-color: transparent;
+  color: rgba(0, 168, 177, 0.65);
+  border-radius: 4px;
+  border: 0.5px solid #474a4e;
+}
+
+.full-width-box {
+  grid-column: 1 / -1; /* Span the full width */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+}
+
+.checkbox-container {
+  padding: 10px; /* Adjust padding as needed */
+  display: flex;
+  flex-direction: column; /* Stack checkboxes in a column */
+}
+
+.save-button {
+  border-radius: 4px;
+  padding: 15px;
+  background-color: transparent;
+  box-shadow: 0 7px 5px 1px rgba(0, 0, 0, 0.2);
+  border: 1px solid #48f7f5;
+  color: #25c0e9;
+}
