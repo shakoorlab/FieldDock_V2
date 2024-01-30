@@ -3,6 +3,9 @@ import { useNavigate } from "react-router-dom";
 import FieldDockLogo from "../../assets/svg/FieldDock-Logo.svg";
 import HomePageNotActive from "../../assets/svg/index_not_active.svg";
 import HomePageActive from "../../assets/svg/index_active.svg";
+
+import SettingsNotActive from "../../assets/svg/settings_not_active.svg";
+import SettingsActive from "../../assets/svg/settings_active.svg";
 import DownloadNotActive from "../../assets/svg/download_not_active.svg";
 import DownloadActive from "../../assets/svg/download_active.svg";
 import sensorSettingsActive from "../../assets/svg/sensor_settings_active.svg";
@@ -14,6 +17,9 @@ function Navbar() {
 
   const navToHomePage = () => {
     navigate("/");
+  };
+  const navToSettings = () => {
+    navigate("/Settings");
   };
   const navToDownload = () => {
     navigate("/Download");
@@ -92,10 +98,15 @@ function Navbar() {
                   src="src/assets/svg/wireless_not_active.svg"
                 />
               </div>
-              <div className="toggle-button">
+              <div
+                className="toggle-button"
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(false)}
+                onClick={navToSettings}
+              >
                 <img
                   className="toggle-button-icon"
-                  src="src/assets/svg/settings_not_active.svg"
+                  src={isHovered ? SettingsActive : SettingsNotActive}
                 />
               </div>
             </div>
