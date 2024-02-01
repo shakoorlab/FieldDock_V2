@@ -6,10 +6,14 @@ import HomePageActive from "../../assets/svg/index_active.svg";
 
 import SettingsNotActive from "../../assets/svg/settings_not_active.svg";
 import SettingsActive from "../../assets/svg/settings_active.svg";
-import DownloadNotActive from "../../assets/svg/download_not_active.svg";
-import DownloadActive from "../../assets/svg/download_active.svg";
+
 import sensorSettingsActive from "../../assets/svg/sensor_settings_active.svg";
 import sensorSettingsNotActive from "../../assets/svg/sensor_settings_not_active.svg";
+
+import imagingSettingsNotActive from "../../assets/svg/imaging_settings_not_active.svg";
+import imagingSettingActive from "../../assets/svg/imaging_settings_active.svg";
+import DownloadNotActive from "../../assets/svg/download_not_active.svg";
+import DownloadActive from "../../assets/svg/download_active.svg";
 
 function Navbar() {
   const [isHovered, setIsHovered] = useState(false);
@@ -21,11 +25,16 @@ function Navbar() {
   const navToSettings = () => {
     navigate("/Settings");
   };
-  const navToDownload = () => {
-    navigate("/Download");
-  };
+
   const navToSensorSettings = () => {
     navigate("/Realtime-Settings");
+  };
+  const navToImagingSettings = () => {
+    navigate("/Imaging-Settings");
+  };
+
+  const navToDownload = () => {
+    navigate("/Download");
   };
 
   return (
@@ -127,10 +136,17 @@ function Navbar() {
                   }
                 />
               </div>
-              <div className="toggle-button">
+              <div
+                className="toggle-button"
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(false)}
+                onClick={navToImagingSettings}
+              >
                 <img
-                  className="toggle-imaging-unactive"
-                  src="src/assets/svg/imaging_settings_not_active.svg"
+                  className="toggle-button-icon"
+                  src={
+                    isHovered ? imagingSettingActive : imagingSettingsNotActive
+                  }
                 />
               </div>
               <div className="toggle-button">
