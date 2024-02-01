@@ -5,8 +5,10 @@ import "./App.css";
 import Layout from "./components/Layout/Layout";
 import HomePage from "./scenes/dashboard/HomePage";
 import Settings from "./scenes/dashboard/Settings";
-import Download from "./scenes/dashboard/Download";
+
 import RealtimeSettings from "./scenes/dashboard/RealtimeSettings";
+import ImagingSettings from "./scenes/dashboard/ImagingSettings";
+import Download from "./scenes/dashboard/Download";
 
 const App = () => {
   return (
@@ -16,6 +18,7 @@ const App = () => {
           <Route path="/" element={<HomePage />} />
           <Route path="/Settings" element={<Settings />} />
           <Route path="/Realtime-Settings" element={<RealtimeSettings />} />
+          <Route path="/Imaging-Settings" element={<ImagingSettings />} />
           <Route path="/Download" element={<Download />} />
         </Routes>
       </Layout>
