@@ -1,9 +1,7 @@
 import React from "react";
 import Checkbox from "@mui/material/Checkbox";
-import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import "../../css/realtime-settings.css";
-// import "../../../index.css";
 
 function RealtimeSettings() {
   const [checked, setChecked] = React.useState({
