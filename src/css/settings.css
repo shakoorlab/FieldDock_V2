@@ -1,0 +1,19 @@
+.settings-container {
+  display: grid;
+  width: 81vw;
+  margin: auto; /* Center the container */
+  grid-template-columns: repeat(3, 1fr);
+  /* border: 1px solid #48f7f5; */
+  /* padding: 30px 20px; */
+  grid-gap: 2rem;
+  height: 33rem;
+  border-radius: 4px;
+}
+
+.setting-box {
+  background-color: transparent;
+  border: 1px solid #474a4e;
+  border-radius: 4px;
+  position: relative;
+  box-shadow: 0 7px 5px 1px rgba(0, 0, 0, 0.2);
+}
