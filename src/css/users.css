@@ -1,0 +1,18 @@
+.button-container {
+  display: flex;
+  flex-direction: row; /* Align buttons in a row */
+  justify-content: center; /* Center buttons horizontally, adjust as needed */
+  gap: 20px; /* Space between buttons */
+}
+
+.users-save-button {
+  border-radius: 4px;
+  width: 14%;
+  padding: 20px;
+  background-color: transparent;
+  box-shadow: 0 7px 5px 1px rgba(0, 0, 0, 0.2);
+  border: 1px solid #48f7f5;
+  color: #25c0e9;
+  cursor: pointer;
+  font-weight: bold;
+}
