@@ -4,6 +4,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import "../../css/imager-settings.css";
 
 function ImagingSettings() {
+  const options = ["Option 1", "Option 2", "Option 3"];
   const [checked, setChecked] = React.useState({
     first: false,
     second: false,
@@ -34,8 +35,14 @@ function ImagingSettings() {
         <div className="grid-row">
           <div className="image-processing-box">
             <div className="title-box">Image Processing</div>
-            {/* <div className="two-column-container">
-              <div className="checkbox-container">
+            <div className="grid-2x2">
+              <div className="grid-item-left">
+                <p className="downsample-p">
+                  Downsample raw images to the following resolution before
+                  sending to the cloud:
+                </p>
+              </div>
+              <div className="grid-item-right">
                 <FormControlLabel
                   control={
                     <Checkbox
@@ -54,16 +61,24 @@ function ImagingSettings() {
                     },
                   }}
                 />
+              </div>
+              <div className="grid-item-left">
+                <select className="compressed-resolution-select-menu">
+                  <option>Select compressed resolution...</option>
+                </select>
+              </div>
+              <div className="grid-item-right-bottom">
                 <FormControlLabel
                   control={
                     <Checkbox
                       sx={checkboxStyles}
-                      checked={checked.second}
+                      checked={checked.first}
                       onChange={handleChange}
-                      name="second"
+                      name="first"
                     />
                   }
-                  label="Apply the above imaging settings to all FieldDock systems in this account"
+                  label="
+                  Apply the above imaging settings to all FieldDock systems in this group"
                   sx={{
                     "& .MuiFormControlLabel-label": {
                       fontSize: "0.87rem",
@@ -72,7 +87,7 @@ function ImagingSettings() {
                   }}
                 />
               </div>
-            </div>*/}
+            </div>
           </div>
         </div>
 
@@ -119,7 +134,7 @@ function ImagingSettings() {
                     <p className="left-aligned-text">Select image:</p>
                   </div>
                   <div className="grid-item">
-                    <select className=" select-menu">
+                    <select className="select-menu">
                       <option value="">Select image...</option>
                       {/* Add more options here */}
                     </select>
