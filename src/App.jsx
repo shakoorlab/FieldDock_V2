@@ -8,6 +8,7 @@ import Settings from "./scenes/dashboard/Settings";
 
 import RealtimeSettings from "./scenes/dashboard/RealtimeSettings";
 import ImagingSettings from "./scenes/dashboard/ImagingSettings";
+import Diagnostics from "./scenes/dashboard/Diagnostics";
 import Users from "./scenes/dashboard/Users";
 import Download from "./scenes/dashboard/Download";
 
@@ -20,6 +21,7 @@ const App = () => {
           <Route path="/Settings" element={<Settings />} />
           <Route path="/Realtime-Settings" element={<RealtimeSettings />} />
           <Route path="/Imaging-Settings" element={<ImagingSettings />} />
+          <Route path="/Diagnostics" element={<Diagnostics />} />
           <Route path="/Users" element={<Users />} />
           <Route path="/Download" element={<Download />} />
         </Routes>
