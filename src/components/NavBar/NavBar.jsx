@@ -13,6 +13,8 @@ import sensorSettingsNotActive from "../../assets/svg/sensor_settings_not_active
 import imagingSettingsNotActive from "../../assets/svg/imaging_settings_not_active.svg";
 import imagingSettingActive from "../../assets/svg/imaging_settings_active.svg";
 
+import DiagnosticsNotActive from "../../assets/svg/diagnostics_not_active.svg";
+import DiagnosticsActive from "../../assets/svg/diagnostics_active.svg";
 import UsersNotActive from "../../assets/svg/users_not_active.svg";
 import UsersActive from "../../assets/svg/users_active.svg";
 import DownloadNotActive from "../../assets/svg/download_not_active.svg";
@@ -36,6 +38,9 @@ function Navbar() {
     navigate("/Imaging-Settings");
   };
 
+  const navToDiagnostics = () => {
+    navigate("/Diagnostics");
+  };
   const navToUsers = () => {
     navigate("/Users");
   };
@@ -155,10 +160,15 @@ function Navbar() {
                   }
                 />
               </div>
-              <div className="toggle-button">
+              <div
+                className="toggle-button"
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(false)}
+                onClick={navToDiagnostics}
+              >
                 <img
                   className="toggle-button-icon"
-                  src="src/assets/svg/diagnostics_not_active.svg"
+                  src={isHovered ? DiagnosticsActive : DiagnosticsNotActive}
                 />
               </div>
               <div
