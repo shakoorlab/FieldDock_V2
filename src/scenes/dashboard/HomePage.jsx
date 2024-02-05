@@ -10,6 +10,9 @@ import SoilConds from "../../components/Index/SoilConditions";
 function HomePage() {
   return (
     <>
+      <div className="page-title-box">
+        <h3>FieldDock Dashboard</h3>
+      </div>
       <div className="main-grid">
         <GDD />
         <SystemStatus />
