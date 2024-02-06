@@ -57,12 +57,6 @@
   color: rgba(0, 168, 177, 0.65);
 } */
 
-.button-container {
-  width: 100%; /* Full width */
-  display: flex;
-  justify-content: center; /* Center the button horizontally */
-}
-
 .rename-button {
   padding: 10px 20px; /* Padding inside the button */
   border-radius: 4px; /* Rounded corners */
@@ -72,4 +66,7 @@
   border: 1px solid #48f7f5;
   color: #48f7f5;
   font-weight: bold;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
