@@ -3,6 +3,11 @@ import { useNavigate } from "react-router-dom";
 import FieldDockLogo from "../../assets/svg/FieldDock-Logo.svg";
 import HomePageNotActive from "../../assets/svg/index_not_active.svg";
 import HomePageActive from "../../assets/svg/index_active.svg";
+import ImagingNotActive from "../../assets/svg/imaging_not_active.svg";
+import ImagingActive from "../../assets/svg/imaging_active.svg";
+
+import DroneActive from "../../assets/svg/drone_active.svg";
+import DroneNotActive from "../../assets/svg/drone_not_active.svg";
 
 import SettingsNotActive from "../../assets/svg/settings_not_active.svg";
 import SettingsActive from "../../assets/svg/settings_active.svg";
@@ -26,6 +31,12 @@ function Navbar() {
 
   const navToHomePage = () => {
     navigate("/");
+  };
+  const navToImaging = () => {
+    navigate("/Imaging");
+  };
+  const navToDrone = () => {
+    navigate("/Drone");
   };
   const navToSettings = () => {
     navigate("/Settings");
@@ -100,16 +111,26 @@ function Navbar() {
                   src={isHovered ? HomePageActive : HomePageNotActive}
                 />
               </div>
-              <div className="toggle-button">
-                <img
-                  className="toggle-imaging" //! no classname works for some reason
-                  src="src/assets/svg/imaging_not_active.svg"
-                />
-              </div>
-              <div className="toggle-button">
+              <div
+                className="toggle-button"
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(false)}
+                onClick={navToImaging}
+              >
                 <img
                   className="toggle-button-icon"
-                  src="src/assets/svg/drone_not_active.svg"
+                  src={isHovered ? ImagingActive : ImagingNotActive}
+                />
+              </div>
+              <div
+                className="toggle-button"
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(false)}
+                onClick={navToDrone}
+              >
+                <img
+                  className="toggle-button-icon"
+                  src={isHovered ? DroneActive : DroneNotActive}
                 />
               </div>
               <div className="toggle-button">
