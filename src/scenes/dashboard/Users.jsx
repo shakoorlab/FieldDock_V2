@@ -8,8 +8,8 @@ function Users() {
         <h3>Users</h3>
       </div>
       <div className="button-container">
-        <button className="users-save-button">Create User</button>
-        <button className="users-save-button">Edit User</button>
+        <button className="choice-button">Create User</button>
+        <button className="choice-button">Edit User</button>
       </div>
     </>
   );
