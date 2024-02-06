@@ -19,7 +19,7 @@ body {
   display: grid;
   width: 81vw;
   height: 100%;
-  grid-row-gap: 3rem;
+  grid-row-gap: 2rem;
   grid-template-rows: 9rem 1fr;
   align-content: start;
   margin: auto; /* Centers the grid horizontally */
@@ -70,7 +70,7 @@ body {
   width: 100%;
   height: 55%;
   border: 1px solid rgba(0, 168, 177, 0.65);
-  color: #474a4e;
+  color: #ececed;
   background-color: rgba(0, 0, 0, 0);
   border-radius: 4px;
   margin-bottom: 0;
@@ -374,6 +374,34 @@ body {
   text-align: center; /* Ensure text is centered */
   /* Any other specific styles for the h2 element */
 }
+
+/* //? buttons */
+
+.button-container {
+  display: flex;
+  flex-direction: row; /* Align buttons in a row */
+  justify-content: center; /* Center buttons horizontally, adjust as needed */
+  gap: 20px; /* Space between buttons */
+}
+
+.choice-button {
+  border-radius: 4px;
+  width: 14%;
+  padding: 20px;
+  background-color: transparent;
+  box-shadow: 0 7px 5px 1px rgba(0, 0, 0, 0.2);
+  border: 1px solid #48f7f5;
+  color: #25c0e9;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* //? diagnostics */
+
+.input-custom::placeholder {
+  color: #a3a4a6;
+}
+
 /* //?MEDIA QUERIES START */
 /* @media screen and (max-width: 768px) {
   .main-grid {
