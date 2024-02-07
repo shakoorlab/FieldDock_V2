@@ -9,7 +9,7 @@
 }
 
 .setting-box {
-  background-color: transparent;
+  background: linear-gradient(1deg, rgba(0, 0, 0, 0), #1b1b1b);
   border: 1px solid #474a4e;
   border-radius: 4px;
   position: relative;
