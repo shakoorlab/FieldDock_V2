@@ -3,6 +3,8 @@ import "../../css/settings.css";
 
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
+// import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
+import FileDownloadIcon from "@mui/icons-material/FileDownload";
 
 function Settings() {
   const [checked, setChecked] = React.useState({
@@ -21,6 +23,12 @@ function Settings() {
     "&.Mui-checked": {
       color: "#48f7f5",
     },
+  };
+
+  const iconStyle = {
+    color: "#48f7f5",
+    marginRight: "5px",
+    fontSize: "inherit",
   };
   return (
     <>
@@ -55,7 +63,10 @@ function Settings() {
               />
             </div>
             <div className="box-item button-container">
-              <button className="rename-button">Update</button>
+              <button className="rename-button">
+                <FileDownloadIcon style={iconStyle} />
+                Update
+              </button>
             </div>
           </div>
         </div>
