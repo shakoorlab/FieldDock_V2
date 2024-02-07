@@ -5,19 +5,16 @@ import HomePageNotActive from "../../assets/svg/index_not_active.svg";
 import HomePageActive from "../../assets/svg/index_active.svg";
 import ImagingNotActive from "../../assets/svg/imaging_not_active.svg";
 import ImagingActive from "../../assets/svg/imaging_active.svg";
-
 import DroneActive from "../../assets/svg/drone_active.svg";
 import DroneNotActive from "../../assets/svg/drone_not_active.svg";
-
+import SensorsNotActive from "../../assets/svg/wireless_not_active.svg";
+import SensorsActive from "../../assets/svg/wireless_active.svg";
 import SettingsNotActive from "../../assets/svg/settings_not_active.svg";
 import SettingsActive from "../../assets/svg/settings_active.svg";
-
 import sensorSettingsActive from "../../assets/svg/sensor_settings_active.svg";
 import sensorSettingsNotActive from "../../assets/svg/sensor_settings_not_active.svg";
-
 import imagingSettingsNotActive from "../../assets/svg/imaging_settings_not_active.svg";
 import imagingSettingActive from "../../assets/svg/imaging_settings_active.svg";
-
 import DiagnosticsNotActive from "../../assets/svg/diagnostics_not_active.svg";
 import DiagnosticsActive from "../../assets/svg/diagnostics_active.svg";
 import UsersNotActive from "../../assets/svg/users_not_active.svg";
@@ -37,6 +34,9 @@ function Navbar() {
   };
   const navToDrone = () => {
     navigate("/Drone");
+  };
+  const navToSensors = () => {
+    navigate("/Sensors");
   };
   const navToSettings = () => {
     navigate("/Settings");
@@ -133,10 +133,15 @@ function Navbar() {
                   src={isHovered ? DroneActive : DroneNotActive}
                 />
               </div>
-              <div className="toggle-button">
+              <div
+                className="toggle-button"
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(false)}
+                onClick={navToSensors}
+              >
                 <img
-                  className="" //! no classname works for some reason
-                  src="src/assets/svg/wireless_not_active.svg"
+                  className="" //no classname for some reason
+                  src={isHovered ? SensorsActive : SensorsNotActive}
                 />
               </div>
               <div
