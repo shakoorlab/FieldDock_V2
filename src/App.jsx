@@ -6,6 +6,7 @@ import Layout from "./components/Layout/Layout";
 import HomePage from "./scenes/dashboard/HomePage";
 import Imaging from "./scenes/dashboard/Imaging";
 import Drone from "./scenes/dashboard/Drone";
+import Sensors from "./scenes/dashboard/Sensors";
 import Settings from "./scenes/dashboard/Settings";
 
 import RealtimeSettings from "./scenes/dashboard/RealtimeSettings";
@@ -22,6 +23,7 @@ const App = () => {
           <Route path="/" element={<HomePage />} />
           <Route path="/Imaging" element={<Imaging />} />
           <Route path="/Drone" element={<Drone />} />
+          <Route path="/Sensors" element={<Sensors />} />
           <Route path="/Settings" element={<Settings />} />
           <Route path="/Realtime-Settings" element={<RealtimeSettings />} />
           <Route path="/Imaging-Settings" element={<ImagingSettings />} />
