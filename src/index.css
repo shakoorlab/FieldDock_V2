@@ -71,7 +71,7 @@ body {
   height: 55%;
   border: 1px solid rgba(0, 168, 177, 0.65);
   color: #ececed;
-  background-color: rgba(0, 0, 0, 0);
+  background: linear-gradient(1deg, rgba(0, 0, 0, 0), #1b1b1b);
   border-radius: 4px;
   margin-bottom: 0;
   padding: 0 0 0 0.8em;
@@ -278,10 +278,14 @@ body {
   width: 100%; /* Ensures the columns span the entire width of the parent */
 }
 
-.status-column {
+.status-column,
+.drone-status-column {
   display: flex;
   flex-direction: column;
-  justify-content: space-between; /* This will distribute space between the items in the column */
+  justify-content: space-between;
+}
+.drone-status-column {
+  width: 70%;
 }
 
 .status-item {
