@@ -4,7 +4,7 @@ const NoMissionsPlanned = () => {
   return (
     <div
       style={{
-        height: "430px",
+        height: "500px",
         width: "80%",
         display: "flex",
         justifyContent: "center",
