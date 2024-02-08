@@ -362,6 +362,18 @@ body {
   display: flex;
   justify-content: center;
 }
+.misc-soil-table-parent {
+  display: flex;
+  flex-direction: column; /* Stack children vertically */
+  align-items: center; /* Center children horizontally */
+  width: 100%;
+  height: 100%; /*maybe*/
+}
+.content-parent {
+  width: 95%; /* Match the width of the menu-parent for consistency */
+  margin-top: 10px; /* Space between this element and the select menu */
+  overflow: auto;
+}
 
 .menu-parent {
   margin-top: 10px;
@@ -584,6 +596,23 @@ body {
 
 .table-container ::-webkit-scrollbar-thumb {
   background: transparent;
+}
+
+/* //?css for tables */
+
+.table-th {
+  color: rgba(0, 168, 177, 0.65);
+  width: 25%;
+  padding: 10px;
+  text-align: center;
+}
+.table-td {
+  border-bottom: 1px solid #d3d3d3;
+  padding: 10px;
+  text-align: center;
+  border-bottom-width: 1px;
+  width: 25%;
+  color: rgba(0, 168, 177, 0.65);
 }
 
 /* //?MEDIA QUERIES START */
