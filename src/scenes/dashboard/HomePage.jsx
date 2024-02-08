@@ -6,6 +6,8 @@ import Rainfall from "../../components/Index/Rainfall";
 import Misc from "../../components/Index/Misc";
 import EnvConds from "../../components/Index/EnvCond";
 import SoilConds from "../../components/Index/SoilConditions";
+import DroneSVG from "../../assets/svg/Drone_FieldDock.svg";
+import FieldDockBodySVG from "../../assets/svg/FieldDock_Body.svg";
 
 function HomePage() {
   return (
@@ -21,7 +23,7 @@ function HomePage() {
         <div className="second-row-child-container">
           <div className="svg-container">
             <img
-              src="src/assets/svg/Drone_FieldDock.svg"
+              src={DroneSVG}
               className="drone-svg"
               alt="FieldDock drone diagram"
             />
@@ -32,7 +34,7 @@ function HomePage() {
         <div className="second-row-child-container">
           <div className="svg-container">
             <img
-              src="src/assets/svg/FieldDock_Body.svg"
+              src={FieldDockBodySVG}
               className="body-svg"
               alt="FieldDock body"
             />
