@@ -21,47 +21,19 @@ function Table() {
         <table style={{ width: "100%", tableLayout: "fixed" }}>
           <thead>
             <tr>
-              <th
-                style={{
-                  color: "rgba(0, 168, 177, 0.65)",
-                  width: "25%",
-                  padding: "10px",
-                  textAlign: "center",
-                }}
-              >
+              <th className="table-th">
                 <div>Soil</div>
                 <div>Depth</div>
               </th>
-              <th
-                style={{
-                  color: "rgba(0, 168, 177, 0.65)",
-                  width: "25%",
-                  padding: "10px",
-                  textAlign: "center",
-                }}
-              >
+              <th className="table-th">
                 <div>Soil</div>
                 <div>Moisture</div>
               </th>
-              <th
-                style={{
-                  color: "rgba(0, 168, 177, 0.65)",
-                  width: "25%",
-                  padding: "10px",
-                  textAlign: "center",
-                }}
-              >
+              <th className="table-th">
                 <div>Soil</div>
                 <div>Temperature</div>
               </th>
-              <th
-                style={{
-                  color: "rgba(0, 168, 177, 0.65)",
-                  width: "25%",
-                  padding: "10px",
-                  textAlign: "center",
-                }}
-              >
+              <th className="table-th">
                 <div>Electrical</div>
                 <div>Conductivity</div>
               </th>
@@ -70,607 +42,83 @@ function Table() {
 
           <tbody>
             <tr>
-              <td
-                style={{
-                  borderBottom: "1px solid #d3d3d3",
-                  padding: "10px",
-                  textAlign: "center",
-                  borderBottomWidth: "1px",
-                  width: "25%",
-                  color: "rgba(0, 168, 177, 0.65)",
-                }}
-              >
-                -
-              </td>
-              <td
-                style={{
-                  borderBottom: "1px solid #d3d3d3",
-                  padding: "10px",
-                  textAlign: "center",
-                  borderBottomWidth: "1px",
-                  width: "25%",
-                  color: "rgba(0, 168, 177, 0.65)",
-                }}
-              >
-                -
-              </td>
-              <td
-                style={{
-                  borderBottom: "1px solid #d3d3d3",
-                  padding: "10px",
-                  textAlign: "center",
-                  borderBottomWidth: "1px",
-                  width: "25%",
-                  color: "rgba(0, 168, 177, 0.65)",
-                }}
-              >
-                -
-              </td>
-              <td
-                style={{
-                  borderBottom: "1px solid #d3d3d3",
-                  padding: "10px",
-                  textAlign: "center",
-                  borderBottomWidth: "1px",
-                  width: "25%",
-                  color: "rgba(0, 168, 177, 0.65)",
-                }}
-              >
-                -
-              </td>
+              <td className="table-td">-</td>
+              <td className="table-td">-</td>
+              <td className="table-td">-</td>
+              <td className="table-td">-</td>
             </tr>
 
             <tr>
-              <td
-                style={{
-                  borderBottom: "1px solid #d3d3d3",
-                  padding: "10px",
-                  textAlign: "center",
-                  borderBottomWidth: "1px",
-                  width: "25%",
-                }}
-              >
-                -
-              </td>
-              <td
-                style={{
-                  borderBottom: "1px solid #d3d3d3",
-                  padding: "10px",
-                  textAlign: "center",
-                  borderBottomWidth: "1px",
-                  width: "25%",
-                }}
-              >
-                -
-              </td>
-              <td
-                style={{
-                  borderBottom: "1px solid #d3d3d3",
-                  padding: "10px",
-                  textAlign: "center",
-                  borderBottomWidth: "1px",
-                  width: "25%",
-                }}
-              >
-                -
-              </td>
-              <td
-                style={{
-                  borderBottom: "1px solid #d3d3d3",
-                  padding: "10px",
-                  textAlign: "center",
-                  borderBottomWidth: "1px",
-                  width: "25%",
-                }}
-              >
-                -
-              </td>
+              <td className="table-td">-</td>
+              <td className="table-td">-</td>
+              <td className="table-td">-</td>
+              <td className="table-td">-</td>
             </tr>
             <tr>
-              <td
-                style={{
-                  borderBottom: "1px solid #d3d3d3",
-                  padding: "10px",
-                  textAlign: "center",
-                  borderBottomWidth: "1px",
-                  width: "25%",
-                }}
-              >
-                -
-              </td>
-              <td
-                style={{
-                  borderBottom: "1px solid #d3d3d3",
-                  padding: "10px",
-                  textAlign: "center",
-                  borderBottomWidth: "1px",
-                  width: "25%",
-                }}
-              >
-                -
-              </td>
-              <td
-                style={{
-                  borderBottom: "1px solid #d3d3d3",
-                  padding: "10px",
-                  textAlign: "center",
-                  borderBottomWidth: "1px",
-                  width: "25%",
-                }}
-              >
-                -
-              </td>
-              <td
-                style={{
-                  borderBottom: "1px solid #d3d3d3",
-                  padding: "10px",
-                  textAlign: "center",
-                  borderBottomWidth: "1px",
-                  width: "25%",
-                }}
-              >
-                -
-              </td>
+              <td className="table-td">-</td>
+              <td className="table-td">-</td>
+              <td className="table-td">-</td>
+              <td className="table-td">-</td>
             </tr>
             <tr>
-              <td
-                style={{
-                  borderBottom: "1px solid #d3d3d3",
-                  padding: "10px",
-                  textAlign: "center",
-                  borderBottomWidth: "1px",
-                  width: "25%",
-                }}
-              >
-                -
-              </td>
-              <td
-                style={{
-                  borderBottom: "1px solid #d3d3d3",
-                  padding: "10px",
-                  textAlign: "center",
-                  borderBottomWidth: "1px",
-                  width: "25%",
-                }}
-              >
-                -
-              </td>
-              <td
-                style={{
-                  borderBottom: "1px solid #d3d3d3",
-                  padding: "10px",
-                  textAlign: "center",
-                  borderBottomWidth: "1px",
-                  width: "25%",
-                }}
-              >
-                -
-              </td>
-              <td
-                style={{
-                  borderBottom: "1px solid #d3d3d3",
-                  padding: "10px",
-                  textAlign: "center",
-                  borderBottomWidth: "1px",
-                  width: "25%",
-                }}
-              >
-                -
-              </td>
+              <td className="table-td">-</td>
+              <td className="table-td">-</td>
+              <td className="table-td">-</td>
+              <td className="table-td">-</td>
             </tr>
             <tr>
-              <td
-                style={{
-                  borderBottom: "1px solid #d3d3d3",
-                  padding: "10px",
-                  textAlign: "center",
-                  borderBottomWidth: "1px",
-                  width: "25%",
-                }}
-              >
-                -
-              </td>
-              <td
-                style={{
-                  borderBottom: "1px solid #d3d3d3",
-                  padding: "10px",
-                  textAlign: "center",
-                  borderBottomWidth: "1px",
-                  width: "25%",
-                }}
-              >
-                -
-              </td>
-              <td
-                style={{
-                  borderBottom: "1px solid #d3d3d3",
-                  padding: "10px",
-                  textAlign: "center",
-                  borderBottomWidth: "1px",
-                  width: "25%",
-                }}
-              >
-                -
-              </td>
-              <td
-                style={{
-                  borderBottom: "1px solid #d3d3d3",
-                  padding: "10px",
-                  textAlign: "center",
-                  borderBottomWidth: "1px",
-                  width: "25%",
-                }}
-              >
-                -
-              </td>
+              <td className="table-td">-</td>
+              <td className="table-td">-</td>
+              <td className="table-td">-</td>
+              <td className="table-td">-</td>
             </tr>
             <tr>
-              <td
-                style={{
-                  borderBottom: "1px solid #d3d3d3",
-                  padding: "10px",
-                  textAlign: "center",
-                  borderBottomWidth: "1px",
-                  width: "25%",
-                }}
-              >
-                -
-              </td>
-              <td
-                style={{
-                  borderBottom: "1px solid #d3d3d3",
-                  padding: "10px",
-                  textAlign: "center",
-                  borderBottomWidth: "1px",
-                  width: "25%",
-                }}
-              >
-                -
-              </td>
-              <td
-                style={{
-                  borderBottom: "1px solid #d3d3d3",
-                  padding: "10px",
-                  textAlign: "center",
-                  borderBottomWidth: "1px",
-                  width: "25%",
-                }}
-              >
-                -
-              </td>
-              <td
-                style={{
-                  borderBottom: "1px solid #d3d3d3",
-                  padding: "10px",
-                  textAlign: "center",
-                  borderBottomWidth: "1px",
-                  width: "25%",
-                }}
-              >
-                -
-              </td>
+              <td className="table-td">-</td>
+              <td className="table-td">-</td>
+              <td className="table-td">-</td>
+              <td className="table-td">-</td>
             </tr>
             <tr>
-              <td
-                style={{
-                  borderBottom: "1px solid #d3d3d3",
-                  padding: "10px",
-                  textAlign: "center",
-                  borderBottomWidth: "1px",
-                  width: "25%",
-                }}
-              >
-                -
-              </td>
-              <td
-                style={{
-                  borderBottom: "1px solid #d3d3d3",
-                  padding: "10px",
-                  textAlign: "center",
-                  borderBottomWidth: "1px",
-                  width: "25%",
-                }}
-              >
-                -
-              </td>
-              <td
-                style={{
-                  borderBottom: "1px solid #d3d3d3",
-                  padding: "10px",
-                  textAlign: "center",
-                  borderBottomWidth: "1px",
-                  width: "25%",
-                }}
-              >
-                -
-              </td>
-              <td
-                style={{
-                  borderBottom: "1px solid #d3d3d3",
-                  padding: "10px",
-                  textAlign: "center",
-                  borderBottomWidth: "1px",
-                  width: "25%",
-                }}
-              >
-                -
-              </td>
+              <td className="table-td">-</td>
+              <td className="table-td">-</td>
+              <td className="table-td">-</td>
+              <td className="table-td">-</td>
             </tr>
             <tr>
-              <td
-                style={{
-                  borderBottom: "1px solid #d3d3d3",
-                  padding: "10px",
-                  textAlign: "center",
-                  borderBottomWidth: "1px",
-                  width: "25%",
-                }}
-              >
-                -
-              </td>
-              <td
-                style={{
-                  borderBottom: "1px solid #d3d3d3",
-                  padding: "10px",
-                  textAlign: "center",
-                  borderBottomWidth: "1px",
-                  width: "25%",
-                }}
-              >
-                -
-              </td>
-              <td
-                style={{
-                  borderBottom: "1px solid #d3d3d3",
-                  padding: "10px",
-                  textAlign: "center",
-                  borderBottomWidth: "1px",
-                  width: "25%",
-                }}
-              >
-                -
-              </td>
-              <td
-                style={{
-                  borderBottom: "1px solid #d3d3d3",
-                  padding: "10px",
-                  textAlign: "center",
-                  borderBottomWidth: "1px",
-                  width: "25%",
-                }}
-              >
-                -
-              </td>
+              <td className="table-td">-</td>
+              <td className="table-td">-</td>
+              <td className="table-td">-</td>
+              <td className="table-td">-</td>
             </tr>
             <tr>
-              <td
-                style={{
-                  borderBottom: "1px solid #d3d3d3",
-                  padding: "10px",
-                  textAlign: "center",
-                  borderBottomWidth: "1px",
-                  width: "25%",
-                }}
-              >
-                -
-              </td>
-              <td
-                style={{
-                  borderBottom: "1px solid #d3d3d3",
-                  padding: "10px",
-                  textAlign: "center",
-                  borderBottomWidth: "1px",
-                  width: "25%",
-                }}
-              >
-                -
-              </td>
-              <td
-                style={{
-                  borderBottom: "1px solid #d3d3d3",
-                  padding: "10px",
-                  textAlign: "center",
-                  borderBottomWidth: "1px",
-                  width: "25%",
-                }}
-              >
-                -
-              </td>
-              <td
-                style={{
-                  borderBottom: "1px solid #d3d3d3",
-                  padding: "10px",
-                  textAlign: "center",
-                  borderBottomWidth: "1px",
-                  width: "25%",
-                }}
-              >
-                -
-              </td>
+              <td className="table-td">-</td>
+              <td className="table-td">-</td>
+              <td className="table-td">-</td>
+              <td className="table-td">-</td>
             </tr>
             <tr>
-              <td
-                style={{
-                  borderBottom: "1px solid #d3d3d3",
-                  padding: "10px",
-                  textAlign: "center",
-                  borderBottomWidth: "1px",
-                  width: "25%",
-                }}
-              >
-                -
-              </td>
-              <td
-                style={{
-                  borderBottom: "1px solid #d3d3d3",
-                  padding: "10px",
-                  textAlign: "center",
-                  borderBottomWidth: "1px",
-                  width: "25%",
-                }}
-              >
-                -
-              </td>
-              <td
-                style={{
-                  borderBottom: "1px solid #d3d3d3",
-                  padding: "10px",
-                  textAlign: "center",
-                  borderBottomWidth: "1px",
-                  width: "25%",
-                }}
-              >
-                -
-              </td>
-              <td
-                style={{
-                  borderBottom: "1px solid #d3d3d3",
-                  padding: "10px",
-                  textAlign: "center",
-                  borderBottomWidth: "1px",
-                  width: "25%",
-                }}
-              >
-                -
-              </td>
+              <td className="table-td">-</td>
+              <td className="table-td">-</td>
+              <td className="table-td">-</td>
+              <td className="table-td">-</td>
             </tr>
             <tr>
-              <td
-                style={{
-                  borderBottom: "1px solid #d3d3d3",
-                  padding: "10px",
-                  textAlign: "center",
-                  borderBottomWidth: "1px",
-                  width: "25%",
-                }}
-              >
-                -
-              </td>
-              <td
-                style={{
-                  borderBottom: "1px solid #d3d3d3",
-                  padding: "10px",
-                  textAlign: "center",
-                  borderBottomWidth: "1px",
-                  width: "25%",
-                }}
-              >
-                -
-              </td>
-              <td
-                style={{
-                  borderBottom: "1px solid #d3d3d3",
-                  padding: "10px",
-                  textAlign: "center",
-                  borderBottomWidth: "1px",
-                  width: "25%",
-                }}
-              >
-                -
-              </td>
-              <td
-                style={{
-                  borderBottom: "1px solid #d3d3d3",
-                  padding: "10px",
-                  textAlign: "center",
-                  borderBottomWidth: "1px",
-                  width: "25%",
-                }}
-              >
-                -
-              </td>
+              <td className="table-td">-</td>
+              <td className="table-td">-</td>
+              <td className="table-td">-</td>
+              <td className="table-td">-</td>
             </tr>
             <tr>
-              <td
-                style={{
-                  borderBottom: "1px solid #d3d3d3",
-                  padding: "10px",
-                  textAlign: "center",
-                  borderBottomWidth: "1px",
-                  width: "25%",
-                }}
-              >
-                -
-              </td>
-              <td
-                style={{
-                  borderBottom: "1px solid #d3d3d3",
-                  padding: "10px",
-                  textAlign: "center",
-                  borderBottomWidth: "1px",
-                  width: "25%",
-                }}
-              >
-                -
-              </td>
-              <td
-                style={{
-                  borderBottom: "1px solid #d3d3d3",
-                  padding: "10px",
-                  textAlign: "center",
-                  borderBottomWidth: "1px",
-                  width: "25%",
-                }}
-              >
-                -
-              </td>
-              <td
-                style={{
-                  borderBottom: "1px solid #d3d3d3",
-                  padding: "10px",
-                  textAlign: "center",
-                  borderBottomWidth: "1px",
-                  width: "25%",
-                }}
-              >
-                -
-              </td>
+              <td className="table-td">-</td>
+              <td className="table-td">-</td>
+              <td className="table-td">-</td>
+              <td className="table-td">-</td>
             </tr>
             <tr>
-              <td
-                style={{
-                  borderBottom: "1px solid #d3d3d3",
-                  padding: "10px",
-                  textAlign: "center",
-                  borderBottomWidth: "1px",
-                  width: "25%",
-                }}
-              >
-                -
-              </td>
-              <td
-                style={{
-                  borderBottom: "1px solid #d3d3d3",
-                  padding: "10px",
-                  textAlign: "center",
-                  borderBottomWidth: "1px",
-                  width: "25%",
-                }}
-              >
-                -
-              </td>
-              <td
-                style={{
-                  borderBottom: "1px solid #d3d3d3",
-                  padding: "10px",
-                  textAlign: "center",
-                  borderBottomWidth: "1px",
-                  width: "25%",
-                }}
-              >
-                -
-              </td>
-              <td
-                style={{
-                  borderBottom: "1px solid #d3d3d3",
-                  padding: "10px",
-                  textAlign: "center",
-                  borderBottomWidth: "1px",
-                  width: "25%",
-                }}
-              >
-                -
-              </td>
+              <td className="table-td">-</td>
+              <td className="table-td">-</td>
+              <td className="table-td">-</td>
+              <td className="table-td">-</td>
             </tr>
           </tbody>
         </table>
