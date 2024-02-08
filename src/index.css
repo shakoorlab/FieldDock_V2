@@ -597,6 +597,14 @@ body {
 .table-container ::-webkit-scrollbar-thumb {
   background: transparent;
 }
+.content-parent ::-webkit-scrollbar {
+  width: 0px; /* Remove scrollbar space */
+  background: transparent; /* Optional: just making scrollbar invisible */
+}
+
+.content-parent ::-webkit-scrollbar-thumb {
+  background: transparent;
+}
 
 /* //?css for tables */
 
