@@ -217,6 +217,25 @@ body {
   border-radius: 4px;
   font-size: 0.93rem;
 }
+.env-title-box,
+.env-title-box-air,
+.env-title-box-light {
+  position: absolute; /* Position it relative to its parent */
+  top: -12px; /* Half the height of the title box to move it above the parent box */
+  left: 50%; /* Center horizontally */
+  transform: translateX(-50%); /* Offset by half its width to truly center it */
+  background: #1b1b1b;
+  color: rgb(236, 236, 237);
+  padding: 3px 8px;
+  font-size: 0.93rem;
+}
+
+.env-title-box-air {
+  background: #181618;
+}
+.env-title-box-light {
+  background: #0f0f0f;
+}
 
 /* //? Growing degree days starts  */
 .input-group {
@@ -298,12 +317,22 @@ body {
   font-size: 0.85rem;
   color: rgba(0, 168, 177, 0.65);
 }
+.env-status-label {
+  font-size: 0.8rem;
+  color: rgba(0, 168, 177, 0.65);
+}
 
 .status-value {
   margin-left: 15px; /* Adjust as needed */
   font-size: 0.85rem;
   font-weight: bold;
   color: #48f7f5;
+}
+.env-status-value {
+  font-size: 0.85rem;
+  font-weight: bold;
+  color: #48f7f5;
+  margin-top: 10px;
 }
 
 .status-charging {
@@ -333,6 +362,7 @@ body {
   display: flex;
   justify-content: center;
 }
+
 .menu-parent {
   margin-top: 10px;
   height: 30px;
@@ -340,7 +370,14 @@ body {
   display: flex;
   justify-content: flex-start;
 }
-/* //* table-select-menu shares css with fielddock-select-menu in navbar */
+.sensor-menu-parent {
+  margin-top: 10px;
+  height: 30px;
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+}
+
 .table-select-menu {
   width: 100%;
   height: 100%;
@@ -379,6 +416,21 @@ body {
   /* Any other specific styles for the h2 element */
 }
 
+/* //? Env Conditions */
+
+.env-grid {
+  height: 90%;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Creates a 2x2 grid */
+  grid-template-rows: 1fr 1fr;
+  position: absolute;
+  top: 50%; /* Center vertically in the parent */
+  left: 50%; /* Center horizontally in the parent */
+  transform: translate(-50%, -50%); /* Adjust for true centering */
+  margin-top: 10px;
+}
+
 /* //? buttons */
 
 .button-container {
@@ -404,6 +456,134 @@ body {
 
 .input-custom::placeholder {
   color: #a3a4a6;
+}
+
+/* //? Drone and Sensors page  */
+
+.row-column-grid {
+  display: grid;
+  width: 81vw;
+  height: 100%;
+  grid-gap: 2.5rem; /* This sets both row-gap and column-gap */
+  grid-row-gap: 3rem;
+  grid-template-rows: auto auto; /* Adjust the row sizes based on content */
+  grid-template-columns: repeat(3, 1fr); /* Three equal columns */
+  align-content: start;
+  margin: auto; /* Centers the grid horizontally */
+}
+
+.row-menu-parent {
+  display: flex;
+  flex-direction: column; /* Ensures children are stacked vertically */
+  justify-content: flex-start; /* Aligns children to the start along the main axis */
+  align-items: flex-start; /* Aligns children to the start of the cross axis */
+  height: 40%;
+  width: 100%;
+}
+
+.menu-fill {
+  border: 1px solid rgba(0, 168, 177, 0.65);
+  border-radius: 4px;
+  box-shadow: 0 7px 5px 1px rgba(0, 0, 0, 0.2);
+  background: linear-gradient(1deg, rgba(0, 0, 0, 0), #1b1b1b);
+  width: 100%;
+  height: 100%;
+  padding: 0.5em;
+  border-radius: 4px;
+  color: #ececed;
+  font-size: 0.9rem;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* Ensure the column takes the full height of its container */
+}
+
+.middle,
+.bottom {
+  display: flex;
+  align-items: center; /* Center content vertically */
+  justify-content: center; /* Center content horizontally */
+}
+
+.top {
+  display: flex;
+  flex-direction: column; /* Stack children vertically */
+  justify-content: flex-start; /* Align children to start at the top */
+  align-items: center; /* Center children horizontally */
+  height: 20%; /* Adjust based on your design */
+  width: 100%; /* Adjust based on your design */
+}
+
+.top-centered-row-container {
+  position: relative;
+  display: flex;
+  justify-content: center; /* Center the .inner-content div horizontally */
+  align-items: center; /* Center the .inner-content div vertically, but it starts at the top due to parent styling */
+  width: 100%;
+  height: 70%;
+  border: 0.5px solid #474a4e;
+  border-radius: 4px;
+  background: linear-gradient(1deg, rgba(0, 0, 0, 0), #1b1b1b);
+}
+
+.top-inner-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.middle {
+  height: 60%;
+}
+
+.page-img {
+  width: 80%;
+  height: 80%;
+}
+.sensor-page-img {
+  width: 100%;
+  height: 100%;
+}
+
+.bottom {
+  display: flex;
+  flex-direction: column; /* Stack children vertically */
+  justify-content: flex-end; /* Align children to start at the top */
+  align-items: center; /* Center children horizontally */
+  height: 20%; /* Adjust based on your design */
+  width: 100%; /* Adjust based on your design */
+}
+
+.bottom-centered-row-container {
+  position: relative;
+  display: flex;
+  justify-content: center; /* Center the .inner-content div horizontally */
+  align-items: center; /* Center the .inner-content div vertically, but it starts at the top due to parent styling */
+  width: 100%;
+  height: 70%;
+  border: 0.5px solid #474a4e;
+  border-radius: 4px;
+  background: linear-gradient(1deg, rgba(0, 0, 0, 0), #1b1b1b);
+}
+
+.bottom-inner-content {
+  display: flex;
+  width: 90%; /* Ensure the container takes the full width of its parent */
+  padding: 0; /* Adjust or remove padding as necessary */
+  margin-top: 10px;
+}
+
+/* Target the div that directly contains the scrolling content */
+.table-container ::-webkit-scrollbar {
+  width: 0px; /* Remove scrollbar space */
+  background: transparent; /* Optional: just making scrollbar invisible */
+}
+
+.table-container ::-webkit-scrollbar-thumb {
+  background: transparent;
 }
 
 /* //?MEDIA QUERIES START */
