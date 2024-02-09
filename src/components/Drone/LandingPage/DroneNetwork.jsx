@@ -9,11 +9,11 @@ function DroneNetwork() {
           <div className="drone-status-column">
             <div className="status-item">
               <span className="status-label">Connected Drones:</span>
-              <span className="status-value">34.21%</span>
+              <span className="status-value">1</span>
             </div>
             <div className="status-item">
               <span className="status-label">Mission Status:</span>
-              <span className="status-value">79.38%</span>
+              <span className="status-value">In Flight</span>
             </div>
           </div>
         </div>
