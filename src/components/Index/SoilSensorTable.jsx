@@ -71,6 +71,25 @@ const SoilSensorTable = () => {
           <td className="table-td">-</td>
           <td className="table-td">-</td>
         </tr>
+        {/* //!why is menu  above these, crunching when I add more entries? */}
+        {/* <tr>
+          <td className="table-td">-</td>
+          <td className="table-td">-</td>
+          <td className="table-td">-</td>
+          <td className="table-td">-</td>
+        </tr>
+        <tr>
+          <td className="table-td">-</td>
+          <td className="table-td">-</td>
+          <td className="table-td">-</td>
+          <td className="table-td">-</td>
+        </tr>
+        <tr>
+          <td className="table-td">-</td>
+          <td className="table-td">-</td>
+          <td className="table-td">-</td>
+          <td className="table-td">-</td>
+        </tr> */}
       </tbody>
     </table>
   );
