@@ -624,8 +624,8 @@ body {
 }
 
 /* //?MEDIA QUERIES START */
-/* @media screen and (max-width: 768px) {
+@media screen and (min-width: 1700px) {
   .main-grid {
-    display: block;
+    grid-template-rows: 6rem 14rem 24rem 1fr;
   }
-} */
+}
