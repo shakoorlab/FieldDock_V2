@@ -1,5 +1,5 @@
 import React from "react";
-import NoMissionsPlanned from "./NoMissions";
+import NoMissionsPlanned from "../Missions/NoMissions";
 
 function CompletedMissionsParent() {
   return (
