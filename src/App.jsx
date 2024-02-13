@@ -1,8 +1,14 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Outlet,
+} from "react-router-dom";
 
 import "./App.css";
 import Layout from "./components/Layout/Layout";
+import Navbar from "../src/components/NavBar/NavBar";
 import HomePage from "./scenes/dashboard/HomePage";
 import Imaging from "./scenes/dashboard/Imaging";
 import Drone from "./scenes/dashboard/Drone";
@@ -14,12 +20,21 @@ import ImagingSettings from "./scenes/dashboard/ImagingSettings";
 import Diagnostics from "./scenes/dashboard/Diagnostics";
 import Users from "./scenes/dashboard/Users";
 import Download from "./scenes/dashboard/Download";
+import DroneDashboard from "./components/Drone/Dashboard/DroneDash";
+
+const LayoutWithNavbar = () => (
+  <Layout>
+    <Navbar />
+    <Outlet />
+  </Layout>
+);
 
 const App = () => {
   return (
     <Router>
-      <Layout>
-        <Routes>
+      <Routes>
+        {/* Directly applying LayoutWithNavbar for routes that need the Navbar */}
+        <Route element={<LayoutWithNavbar />}>
           <Route path="/" element={<HomePage />} />
           <Route path="/Imaging" element={<Imaging />} />
           <Route path="/Drone" element={<Drone />} />
@@ -30,8 +45,10 @@ const App = () => {
           <Route path="/Diagnostics" element={<Diagnostics />} />
           <Route path="/Users" element={<Users />} />
           <Route path="/Download" element={<Download />} />
-        </Routes>
-      </Layout>
+        </Route>
+        {/* Separate Route outside LayoutWithNavbar for components without NavBar and layout */}
+        <Route path="/drone-dashboard" element={<DroneDashboard />} />
+      </Routes>
     </Router>
   );
 };
