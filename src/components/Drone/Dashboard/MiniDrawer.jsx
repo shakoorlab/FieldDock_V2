@@ -1,8 +1,8 @@
-import * as React from "react";
+import React, { useState } from "react";
 import { styled, useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
-import Grid from "@mui/material/Unstable_Grid2";
+// import Grid from "@mui/material/Unstable_Grid2";
 import MuiDrawer from "@mui/material/Drawer";
 import MuiAppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
@@ -25,6 +25,17 @@ import FlightIcon from "@mui/icons-material/Flight";
 import AirplaneTicketIcon from "@mui/icons-material/AirplaneTicket";
 import NavigationIcon from "@mui/icons-material/Navigation";
 import SpaceDashboardIcon from "@mui/icons-material/SpaceDashboard";
+// import { LocalizationProvider } from "@mui/x-date-pickers-pro";
+// import { AdapterDayjs } from "@mui/x-date-pickers-pro/AdapterDayjs";
+// import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
+// import DroneFieldDock from "../../../assets/svg/Drone_FieldDock.svg";
+
+// import Grow from "@mui/material/Grow";
+import OverviewDrawer from "../Dashboard/Overview/OverviewDrawer";
+import CreateMissionDrawer from "./CreateMission/CreateMissionDrawer";
+import PlannedMissionDrawer from "./PlannedMission/PlannedMissionDrawer";
+import CompletedMissionDrawer from "./CompletedMission/CompletedMissionDrawer";
+import TrackingDrawer from "./Tracking/TrackingDrawer";
 
 const drawerWidth = 240;
 
@@ -103,6 +114,8 @@ const Drawer = styled(MuiDrawer, {
 export default function MiniDrawer() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  // State to manage which component to display
+  const [activePage, setActivePage] = useState("");
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -111,22 +124,44 @@ export default function MiniDrawer() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+  // Function to set the active page based on menu item clicked
+  const handleMenuItemClick = (componentName) => {
+    setActivePage(componentName);
+  };
+
+  // Determine which component to render based on activePage
+  const renderActivePageComponent = () => {
+    const activeMenuItem = menuItems.find((item) => item.text === activePage);
+    return activeMenuItem ? activeMenuItem.component : null;
+  };
 
   const menuItems = [
-    { text: "Missions Overview", Icon: SpaceDashboardIcon },
-    { text: "Plot Coordinates", Icon: MapIcon },
-    { text: "Flight", Icon: FlightIcon },
-    { text: "Planned Missions", Icon: AirplaneTicketIcon },
-    { text: "Track Flight", Icon: NavigationIcon },
+    {
+      text: "Missions Overview",
+      Icon: SpaceDashboardIcon,
+      component: <OverviewDrawer />,
+    },
+    {
+      text: "Create Mission",
+      Icon: MapIcon,
+      component: <CreateMissionDrawer />,
+    },
+    {
+      text: "Planned Missions",
+      Icon: FlightIcon,
+      component: <PlannedMissionDrawer />,
+    },
+    {
+      text: "Completed Missions",
+      Icon: AirplaneTicketIcon,
+      component: <CompletedMissionDrawer />,
+    },
+    {
+      text: "Track Flight",
+      Icon: NavigationIcon,
+      component: <TrackingDrawer />,
+    },
   ];
-
-  const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-    ...theme.typography.body2,
-    padding: theme.spacing(1),
-    textAlign: "center",
-    color: theme.palette.text.secondary,
-  }));
 
   return (
     <Box
@@ -189,6 +224,7 @@ export default function MiniDrawer() {
           {menuItems.map(({ text, Icon }) => (
             <ListItem key={text} disablePadding sx={{ display: "block" }}>
               <ListItemButton
+                onClick={() => handleMenuItemClick(text)}
                 sx={{
                   minHeight: 48,
                   justifyContent: open ? "initial" : "center",
@@ -242,41 +278,52 @@ export default function MiniDrawer() {
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3, height: "100vh" }}>
         <DrawerHeader />
-        <Box sx={{ flexGrow: 1 }}>
-          <Grid container spacing={2}>
-            <Grid xs={12} md={12} lg={12}>
-              <Item
-                sx={{
-                  background: "transparent",
-                  borderBottom: "1px solid rgba(0, 242, 255, 0.25)",
-                  display: "flex",
-                  justifyContent: "flex-start",
-                  borderRadius: "0px",
-                }}
-              >
-                <Typography
-                  variant="h4"
-                  noWrap
-                  component="div"
-                  sx={{ color: "#FFF" }}
-                >
-                  Missions Overview
-                </Typography>
-              </Item>
-            </Grid>
-            <Grid xs={12} md={4}>
-              <Item>xs=6 md=4</Item>
-            </Grid>
-            <Grid xs={12} md={4}>
-              <Item>xs=6 md=4</Item>
-            </Grid>
-            <Grid xs={12} md={4}>
-              <Item>xs=6 md=8</Item>
-              <Item>xs=6 md=8</Item>
-            </Grid>
-          </Grid>
-        </Box>
+        {renderActivePageComponent()}
       </Box>
     </Box>
   );
+}
+
+{
+  /* <Grid item xs={12} sm={12} md={12} lg={6} xl={8}>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <div className="customCalendar">
+                  <Grow
+                    in={true}
+                    style={{ transformOrigin: "0 0 0" }}
+                    timeout={1000}
+                  >
+                    <DateCalendar
+                      showDaysOutsideCurrentMonth
+                      views={["day", "month"]}
+                      sx={{
+                        // width: "90% !important",
+                        borderRadius: "4px",
+                        border: "1px solid #797979",
+                        boxShadow: "0 7px 5px 1px rgba(0, 0, 0, 0.2)",
+                        background:
+                          "linear-gradient(1deg, rgba(0, 0, 0, 0), #1b1b1b)",
+                      }}
+                    />
+                  </Grow>
+                </div>
+              </LocalizationProvider>
+            </Grid> */
+}
+
+{
+  /* <Grid xs={4} md={4}>
+              <Item>xs=6 md=8</Item>
+            </Grid>
+            <Grid xs={4} md={4}>
+              <Item>xs=6 md=8</Item>
+            </Grid> */
+}
+{
+  /* <Grid xs={4} md={4}>
+              <img
+                style={{ width: "100%", height: "100%" }}
+                src={DroneFieldDock}
+              />
+            </Grid> */
 }
