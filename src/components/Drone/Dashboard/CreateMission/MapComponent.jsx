@@ -1,5 +1,10 @@
 import React, { useState, useCallback } from "react";
-import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
+import {
+  GoogleMap,
+  LoadScript,
+  Marker,
+  Polyline,
+} from "@react-google-maps/api";
 import axios from "axios";
 
 const containerStyle = {
@@ -54,7 +59,6 @@ const MapComponent = ({
     }
   };
 
-  // Memoize the onChange handler to prevent unnecessary re-renders
   const handleAddressChange = useCallback((event) => {
     setAddress(event.target.value);
   }, []);
@@ -71,6 +75,22 @@ const MapComponent = ({
           {markerPositions.map((position, index) => (
             <Marker key={index} position={position} label={`${index + 1}`} />
           ))}
+          <Polyline
+            path={markerPositions}
+            options={{
+              strokeColor: "#FF0000",
+              strokeOpacity: 0.8,
+              strokeWeight: 2,
+              fillColor: "#FF0000",
+              fillOpacity: 0.35,
+              clickable: false,
+              draggable: false,
+              editable: false,
+              visible: true,
+              radius: 30000,
+              zIndex: 1,
+            }}
+          />
         </GoogleMap>
       </LoadScript>
       <form onSubmit={handleLocationSubmit} style={searchBoxStyles}>
