@@ -4,8 +4,8 @@ const NoMissionsPlanned = () => {
   return (
     <div
       style={{
-        height: "500px",
-        width: "80%",
+        height: "400px",
+        width: "100%",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
