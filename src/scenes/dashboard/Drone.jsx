@@ -8,6 +8,7 @@ import DroneFieldDock from "../../assets/svg/Drone_FieldDock.svg";
 import RenameDrone from "../../components/Drone/LandingPage/RenameDrone";
 
 import DroneStatus from "../../components/Drone/LandingPage/DroneStatus";
+// import MapCoordinatesParent from "../../components/Drone/Missions/MissionPlanning/MapCoordinatesParent";
 
 function Drone() {
   return (
@@ -38,7 +39,7 @@ function Drone() {
           </div>
 
           <div className="middle">
-            <img className="drone-page-img" src={DroneFieldDock} />
+            <img className="page-img" src={DroneFieldDock} />
           </div>
           <div class="bottom">
             <RenameDrone />
