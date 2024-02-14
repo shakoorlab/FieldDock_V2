@@ -1,21 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 import axios from "axios";
 
-//-------------------------------------------------------------------------------------------------
-// styling for the maps container, the initial centering, and the search box that displays on the map
 const containerStyle = {
   position: "relative",
   width: "100%",
-  height: "815px",
+  height: "79.5vh",
   border: "1px solid #797979",
-  boxShadow: "3px 3px 6px 0 rgba(0, 0, 0, 0.65",
+  boxShadow: "3px 3px 6px 0 rgba(0, 0, 0, 0.65)",
+  borderRadius: "4px",
 };
 
-const initialCenter = {
-  lat: 38.6742,
-  lng: -122.4194,
-};
+const initialCenter = { lat: 38.6742, lng: -122.4194 };
 
 const searchBoxStyles = {
   position: "absolute",
@@ -26,51 +22,46 @@ const searchBoxStyles = {
   border: "1px solid black",
   padding: 10,
 };
-//-------------------------------------------------------------------------------------------------
-//
-//
-//-------------------------------------------------------------------------------------------------
-// Logic for map where it passes the allowing of clicking on the map, markers appearing from this onClick action
-// and tracking the coordinates of what the user types in as their home location, so it can be displayed in the lat/long boxes
-const Map = ({ onMapClick, markerPositions, setHomeLat, setHomeLng }) => {
+
+const googleMapsApiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+
+const MapComponent = ({
+  onMapClick,
+  markerPositions,
+  setHomeLat,
+  setHomeLng,
+}) => {
   const [address, setAddress] = useState("");
-  const [center, setCenter] = useState(initialCenter); // Add this line
+  const [center, setCenter] = useState(initialCenter);
 
-  const geocode = async (address) => {
-    const response = await axios.get(
-      "https://maps.googleapis.com/maps/api/geocode/json",
-      {
-        params: {
-          address: address,
-          key: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
-        },
-      }
-    );
-
-    return response.data.results[0].geometry.location;
-  };
-  //-------------------------------------------------------------------------------------------------
-  //
-  //
-  //
-  //-------------------------------------------------------------------------------------------------
-  // Updates these state variables when the home location changes.
-  // Modify the handleLocationSubmit function in the MapComponent component to look like this:
   const handleLocationSubmit = async (event) => {
     event.preventDefault();
-
-    const coordinates = await geocode(address);
-
-    setCenter(coordinates); // This will only update the map center
-
-    // Pass these two function calls as props
-    setHomeLat(coordinates.lat);
-    setHomeLng(coordinates.lng);
+    try {
+      const { data } = await axios.get(
+        "https://maps.googleapis.com/maps/api/geocode/json",
+        {
+          params: { address, key: googleMapsApiKey },
+        }
+      );
+      const location = data.results[0]?.geometry.location;
+      if (location) {
+        setCenter(location);
+        setHomeLat(location.lat);
+        setHomeLng(location.lng);
+      }
+    } catch (error) {
+      console.error("Error geocoding the address:", error);
+    }
   };
-  //-------------------------------------------------------------------------------------------------
+
+  // Memoize the onChange handler to prevent unnecessary re-renders
+  const handleAddressChange = useCallback((event) => {
+    setAddress(event.target.value);
+  }, []);
+
   return (
     <div style={containerStyle}>
-      <LoadScript googleMapsApiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
+      <LoadScript googleMapsApiKey={googleMapsApiKey}>
         <GoogleMap
           mapContainerStyle={containerStyle}
           center={center}
@@ -86,7 +77,7 @@ const Map = ({ onMapClick, markerPositions, setHomeLat, setHomeLng }) => {
         <input
           type="text"
           value={address}
-          onChange={(event) => setAddress(event.target.value)}
+          onChange={handleAddressChange}
           placeholder="Enter a location"
         />
         <button type="submit" style={{ display: "none" }}>
@@ -97,4 +88,4 @@ const Map = ({ onMapClick, markerPositions, setHomeLat, setHomeLng }) => {
   );
 };
 
-export default Map;
+export default MapComponent;
