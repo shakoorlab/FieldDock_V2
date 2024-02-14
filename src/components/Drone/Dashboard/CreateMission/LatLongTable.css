@@ -1,0 +1,10 @@
+.table-header {
+  border: 1px solid#797979;
+  text-align: center;
+  background-color: #181818;
+}
+
+.table-data {
+  border: 1px solid #797979;
+  background-color: #181818;
+}
