@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import NoMissionsPlanned from "../Missions/NoMissions";
+import NoMissionsPlanned from "./NoMissions";
 import PlannedMissionsCard from "./PlannedMissionCard";
 
 function CompletedMissionsParent() {
