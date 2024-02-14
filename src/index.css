@@ -22,7 +22,7 @@ body {
   grid-row-gap: 2rem;
   grid-template-rows: 9rem 1fr;
   align-content: start;
-  margin: auto; /* Centers the grid horizontally */
+  margin: auto;
   grid-column-gap: 2.5rem;
   grid-template-columns: 1fr 1fr 1fr;
   grid-auto-columns: 1fr;
@@ -35,7 +35,7 @@ body {
   grid-row-gap: 3rem;
   grid-template-rows: 6rem 14rem 16rem 1fr;
   align-content: start;
-  margin: auto; /* Centers the grid horizontally */
+  margin: auto;
   grid-column-gap: 2.5rem;
   grid-template-columns: 1fr 1fr 1fr;
   grid-auto-columns: 1fr;
@@ -44,7 +44,7 @@ body {
 
 .row-content {
   display: grid;
-  grid-template-rows: 1fr 1rem 1fr; /* 1fr for content, 1rem for the gap, 1fr for content */
+  grid-template-rows: 1fr 0.5rem 1fr; /* 1fr for content, 1rem for the gap, 1fr for content */
   width: 100%;
   height: 100%;
 }
@@ -157,7 +157,7 @@ body {
 }
 .screen-toggle-buttons-container-top {
   align-items: flex-start;
-  height: 90%; /* //! I put this here because the icons in bottom row are smaller than ones in top, so had to make them look more even */
+  height: 89%; /* //! I put this here because the icons in bottom row are smaller than ones in top, so had to make them look more even */
 }
 .screen-toggle-buttons-container-bottom {
   align-items: flex-end;
@@ -414,7 +414,7 @@ body {
   background: transparent; /* Example background color */
   color: #fff; /* Example text color */
   padding: 20px; /* Adjust padding as needed */
-  width: 78.4vw; /* Set the width to match the grid */
+  width: 79vw; /* Set the width to match the grid */
   margin: auto; /* Center the box with 20px spacing above and below */
   display: flex; /* Use flexbox for centering content */
   justify-content: center; /* Center horizontally */
@@ -606,6 +606,18 @@ body {
   background: transparent;
 }
 
+.view-plan-button {
+  cursor: pointer;
+  border: 1px solid #48f7f5;
+  color: #48f7f5;
+  font-weight: bold;
+  background-color: transparent;
+  padding: 15px 20px;
+  border-radius: 4px;
+  margin-top: 15px;
+  width: 35%;
+}
+
 /* //?css for tables */
 
 .table-th {
@@ -664,6 +676,12 @@ body {
 }
 .small-column-top {
   height: 85%;
+  width: 100%; /* Adjust if necessary */
+  display: flex;
+  flex-direction: column; /* Ensures vertical layout */
+  align-items: center; /* Centers horizontally still, but not necessary if table width is 100% */
+  justify-content: flex-start; /* Aligns children to the top */
+  overflow: auto; /* Adds scrolling if the table exceeds the div's height */
 }
 .small-column-bottom {
   height: 15%;
@@ -672,6 +690,32 @@ body {
   align-items: center; /* Center buttons vertically */
   border-top: 0.5px solid #474a4e;
 }
+
+.small-column-top table {
+  width: 100%; /* Ensure table fills the container width */
+  margin: 0; /* Removes any default margin */
+  border-collapse: collapse; /* Optional: for styling */
+}
+
+.small-column-top th,
+.small-column-top td {
+  text-align: center; /* Centers text in table headers and cells */
+  border: 1px solid #ddd; /* Adds light borders for definition */
+  padding: 7px; /* Adds padding inside cells for better readability */
+}
+
+.small-column-top th {
+  background-color: transparent; /* Gives the header a distinct background, adjust as needed */
+  color: #fff;
+  font-size: 0.7rem;
+}
+
+.small-column-top tbody tr {
+  background-color: red; /* Sets the background color of table row elements to red */
+  color: white; /* Sets text color to white for contrast against the red background */
+  border-top-right-radius: 4px;
+}
+
 .small-column-button {
   flex: 1; /* Each button takes up equal space */
   border-radius: 4px;
@@ -685,13 +729,69 @@ body {
   text-align: center; /* Ensure text is centered, useful if padding adjustment is needed */
   margin: 0 15px; /* Adds a little space between buttons */
 }
+/* Month on top */
+.MuiPickersCalendarHeader-label {
+  font-size: 1.1rem !important;
+  color: #fff !important;
+}
+/* M-T-W-Th-F */
+.MuiDayCalendar-weekDayLabel {
+  color: rgba(0, 168, 177, 0.65) !important;
+  font-size: 1.2rem !important;
+  font-weight: bold !important;
+}
+/* days in the current month */
+.css-1u23akw-MuiButtonBase-root-MuiPickersDay-root {
+  font-size: 0.95rem !important;
+  color: #fff !important;
+}
+/* days from past and future month */
+.css-18wn1yb-MuiButtonBase-root-MuiPickersDay-root {
+  font-size: 0.95rem !important;
+  color: #797979 !important;
+}
+
+/* month drop down arrow, left arrow, right arrow */
+.css-kg9q0s-MuiButtonBase-root-MuiIconButton-root-MuiPickersArrowSwitcher-button,
+.css-1nkg345-MuiButtonBase-root-MuiIconButton-root-MuiPickersArrowSwitcher-button,
+.css-1tkx1wf-MuiSvgIcon-root-MuiPickersCalendarHeader-switchViewIcon {
+  font-size: 1.1rem !important;
+  color: #fff !important;
+}
 
 /* //?MEDIA QUERIES START */
 @media screen and (min-width: 1700px) {
+  .navbar-grid {
+    grid-template-rows: 12.2rem 1fr;
+  }
   .main-grid {
     grid-template-rows: 6rem 14rem 24rem 1fr;
   }
+  .row-content.row-2-custom {
+    grid-template-rows: 30% 70%;
+  }
   .coordinates-map-grid {
     height: 53rem;
+  }
+  .device-reading {
+    font-size: 1rem;
+  }
+  .device-date-time,
+  .device-coordinates {
+    font-size: 1.2rem;
+    margin-top: 5px;
+  }
+
+  .device-gps {
+    margin-top: 5px;
+    font-size: 1rem;
+  }
+  .row-content {
+    display: grid;
+    grid-template-rows: 1fr 1rem 1fr;
+  }
+  .active-user-name,
+  .log-out-button {
+    height: "80%";
   }
 }
