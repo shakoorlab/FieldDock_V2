@@ -1,6 +1,6 @@
 import React from "react";
-import MapComponent from "./Map";
-import CoordinatesTable from "./CoordinatesTable";
+// import MapComponent from "./Map";
+// import CoordinatesTable from "./CoordinatesTable";
 
 function MapCoordinatesParent() {
   return (
