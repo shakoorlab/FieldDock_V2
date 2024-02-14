@@ -84,6 +84,7 @@ const CreateMissionDrawer = () => {
                 display: "flex",
                 justifyContent: "flex-start",
                 borderRadius: "0px",
+                marginBottom: "10px",
               }}
             >
               <Typography
@@ -244,63 +245,11 @@ const CreateMissionDrawer = () => {
                       "linear-gradient(1deg, rgba(0, 0, 0, 0), #1b1b1b)",
                   }}
                 >
-                  <button
-                    style={{
-                      border: "1px solid #48f7f5",
-                      color: "#25c0e9",
-                      cursor: "pointer",
-                      fontWeight: " bold",
-                      width: "27%",
-                      marginRight: "10px",
-                      backgroundColor: "transparent",
-                      borderRadius: "5px",
-                      height: "45px",
-                      boxShadow: "3px 3px 6px 0 rgba(0, 0, 0, 0.65",
-                    }}
-                    // onMouseOver={handleHover1}
-                    // onMouseOut={handleUnhover1}
-                  >
-                    Save
-                  </button>
+                  <button className="create-mission-buttons">Save</button>
 
-                  <button
-                    style={{
-                      border: "1px solid #48f7f5",
-                      color: "#25c0e9",
-                      cursor: "pointer",
-                      fontWeight: " bold",
-                      width: "27%",
-                      marginRight: "10px",
-                      backgroundColor: "transparent",
-                      borderRadius: "5px",
-                      height: "45px",
-                      boxShadow: "3px 3px 6px 0 rgba(0, 0, 0, 0.65",
-                    }}
-                    // onMouseOver={handleHover1}
-                    // onMouseOut={handleUnhover1}
-                  >
-                    Load
-                  </button>
+                  <button className="create-mission-buttons">Load</button>
 
-                  <button
-                    style={{
-                      border: "1px solid #48f7f5",
-                      color: "#25c0e9",
-                      cursor: "pointer",
-                      fontWeight: " bold",
-                      width: "27%",
-                      backgroundColor: "transparent",
-                      borderRadius: "5px",
-                      height: "45px",
-                      fontWeight: "bold",
-                      boxShadow: "3px 3px 6px 0 rgba(0, 0, 0, 0.65",
-                    }}
-                    // onMouseOver={handleHover}
-                    // onMouseOut={handleUnhover}
-                    // onClick={handlePlanClick}
-                  >
-                    Plan
-                  </button>
+                  <button className="create-mission-buttons-plan">Plan</button>
                 </div>
               </div>
             </Item>
