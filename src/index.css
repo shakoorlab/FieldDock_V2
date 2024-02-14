@@ -634,6 +634,24 @@ body {
   width: 25%;
   color: rgba(0, 168, 177, 0.65);
 }
+/*  //? Drone Dashboard */
+.create-mission-buttons,
+.create-mission-buttons-plan {
+  border: 1px solid #48f7f5;
+  color: #25c0e9;
+  cursor: pointer;
+  font-weight: bold;
+  width: 27%;
+  margin-right: 10px;
+  background-color: transparent;
+  border-radius: 5px;
+  height: 45px;
+  box-shadow: 3px 3px 6px 0 rgba(0, 0, 0, 0.65);
+}
+
+.create-mission-buttons-plan {
+  margin-right: 0px;
+}
 
 /* Month on top */
 .MuiPickersCalendarHeader-label {
