@@ -1,8 +1,14 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import NoMissionsPlanned from "./NoMissions";
 import PlannedMissionsCard from "./PlannedMissionCard";
 
 function PlannedMissionsParent() {
+  const navigate = useNavigate();
+
+  const navToDroneDash = () => {
+    navigate("/drone-dashboard");
+  };
   const [missions, setMissions] = useState([]);
 
   // Polling the REST API
@@ -83,7 +89,9 @@ function PlannedMissionsParent() {
             }}
           >
             <button className="view-plan-button">View</button>
-            <button className="view-plan-button">Plan</button>
+            <button onClick={navToDroneDash} className="view-plan-button">
+              Plan
+            </button>
           </div>
         </div>
         {/* <NoMissionsPlanned /> */}
