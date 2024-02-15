@@ -21,6 +21,7 @@ import Diagnostics from "./scenes/dashboard/Diagnostics";
 import Users from "./scenes/dashboard/Users";
 import Download from "./scenes/dashboard/Download";
 import DroneDashboard from "./components/Drone/Dashboard/DroneDash";
+import CreateMissionDrawer from "./components/Drone/Dashboard/CreateMission/CreateMissionDrawer";
 
 const LayoutWithNavbar = () => (
   <Layout>
@@ -48,6 +49,10 @@ const App = () => {
         </Route>
         {/* Separate Route outside LayoutWithNavbar for components without NavBar and layout */}
         <Route path="/drone-dashboard" element={<DroneDashboard />} />
+        <Route
+          path="/create-mission-drawer"
+          element={<CreateMissionDrawer />}
+        />
       </Routes>
     </Router>
   );
