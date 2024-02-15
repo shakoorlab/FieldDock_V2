@@ -1,14 +1,37 @@
-import React, { useState, useCallback } from "react";
-import { Box, Grid, Typography, Paper, Modal } from "@mui/material";
+import React, { useState, useCallback, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { setDateTime } from "../../../../slices/dateTimeSlice";
+// import { createMission } from "./WaypointConfig";
 import LatLongTable from "../CreateMission/LatLongTable";
-import Map from "../CreateMission/MapComponent"; // Assuming this is your map component
+import { setWaypoints } from "../../../../slices/waypointsSlice";
+import Map from "../CreateMission/MapComponent";
+import {
+  Box,
+  Grid,
+  Typography,
+  Paper,
+  Modal,
+  Stepper,
+  Step,
+  StepLabel,
+  StepContent,
+  Button,
+} from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { LocalizationProvider } from "@mui/x-date-pickers-pro";
 import { AdapterDayjs } from "@mui/x-date-pickers-pro/AdapterDayjs";
 import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
 import { TimePicker } from "@mui/x-date-pickers/TimePicker";
+import dayjs from "dayjs";
 import Grow from "@mui/material/Grow";
 
+// import axios from "axios";
+// import mqtt from "mqtt";
+
+//
+//
+//
+//---------------------logic for Items in Grid----------------------
 // Styled component for reusability
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -18,15 +41,16 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
+//---------------------logic for Modal----------------------
 const modalStyle = {
   position: "absolute",
   top: "50%",
   left: "50%",
   borderRadius: "4px",
   transform: "translate(-50%, -50%)",
-  width: "50%",
-  height: "52%",
-  border: "2.5px solid #797979",
+  width: "50%", //40% for bigger than 1700 screens
+  height: "52%", //45% for bigger than 1700 screens
+  border: "2.5px solid #e0e0e0",
   boxShadow: "0 7px 5px 1px rgba(0, 0, 0, 0.2)",
   p: 4,
   background: "linear-gradient(1deg, rgba(0, 0, 0, 0.95), rgb(27, 27, 27))",
@@ -34,12 +58,82 @@ const modalStyle = {
   flexDirection: "row",
 };
 
+//---------------------logic for Stepper----------------------
+const steps = [
+  // {
+  //   label: "Select mission waypoints",
+  //   description: `For each ad campaign that you create, you can control how much
+  //             you're willing to spend on clicks and conversions, which networks
+  //             and geographical locations you want your ads to show on, and more.`,
+  // },
+  {
+    label: "Select a time and date for mission",
+    description:
+      "Select the date and time for your FieldDock drone mission.  Please remember, you are planning one mission at a time. You will be selecting a date, and a time for the mission to start on that selected date.",
+  },
+  {
+    label: "Finalize mission",
+    description: `As you approach the last step in planning your drone mission, it's crucial to double-check all your details to ensure a successful operation. Take a moment to review the selected date and time, making certain it aligns perfectly with your mission objectives.`,
+  },
+];
+
 const CreateMissionDrawer = () => {
+  const dispatch = useDispatch();
+  //--------------------logic for modal-----------------------------------
   const [open, setOpen] = useState(false); // Modal is initially closed
 
-  const handleOpen = () => setOpen(true); // Function to open the modal
+  // const handleOpen = () => setOpen(true); // Function to open the modal
   const handleClose = () => setOpen(false); // Function to close the modal
+  //
+  //
+  //---------------------logic for stepper----------------------------------
+  const [activeStep, setActiveStep] = React.useState(0);
 
+  const handleNext = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+  };
+
+  const handleBack = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+  };
+
+  const handleReset = () => {
+    setActiveStep(0);
+  };
+  //---------------------logic for storing date/time values-----------------
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedTime, setSelectedTime] = useState(null);
+
+  useEffect(() => {
+    if (selectedDate && selectedTime) {
+      // Extracting the year, month, and day from the selected date
+      const year = selectedDate.year();
+      const month = selectedDate.month() + 1; // Month is 0-indexed
+      const day = selectedDate.date();
+
+      // Extracting the hours and minutes from the selected time
+      const hours = selectedTime.hour();
+      const minutes = selectedTime.minute();
+
+      // Combining and formatting the date and time
+      const combinedDateTime = dayjs(
+        new Date(year, month - 1, day, hours, minutes)
+      ).toISOString();
+      console.log("Combined DateTime:", combinedDateTime); // Log combined date and time
+      dispatch(setDateTime(combinedDateTime));
+    }
+  }, [selectedDate, selectedTime, dispatch]);
+
+  const handleDateChange = (newDate) => {
+    console.log("Selected Date:", newDate); // Log selected date
+    setSelectedDate(newDate);
+  };
+
+  const handleTimeChange = (newTime) => {
+    console.log("Selected Time:", newTime); // Log selected time
+    setSelectedTime(newTime);
+  };
+  //---------------------logic for coordinates on map ----------------------
   const [data, setData] = useState([
     {
       id: 1,
@@ -95,6 +189,78 @@ const CreateMissionDrawer = () => {
       { lat, lng },
     ]);
   }, []);
+
+  //---------------------logic for saving coordiantes into state-----------------------------------------------
+  const handleOpenAndPlanClick = () => {
+    // This opens the modal or performs the action associated with opening
+    setOpen(true);
+
+    // This prepares the waypoints data and dispatches it to the Redux store
+    const waypointsData = data.map((item) => ({
+      id: item.id,
+      command: item.command,
+      p1: item.p1,
+      p2: item.p2,
+      p3: item.p3,
+      p4: item.p4,
+      latitude: item.latitude,
+      longitude: item.longitude,
+      alt: item.alt,
+      frame: item.frame,
+      grad: item.grad,
+      angle: item.angle,
+      dist: item.dist,
+      az: item.az,
+      // Include any other fields you need
+    }));
+
+    console.log("Dispatching waypoints:", waypointsData);
+    dispatch(setWaypoints(waypointsData));
+  };
+
+  //---------------------logic for sending waypoints and dateTime data to MQTT and backend----------------------
+  // const handleFinish = async () => {
+  //   // Prepare data for API request
+  //   const dataForAPI = {
+  //     mission_date: missionDate, // Replace with actual state data or keep mock value
+  //     waypoints: waypoints
+  //       .map((waypoint) => {
+  //         return `${waypoint.id},${waypoint.command},${waypoint.p1},${waypoint.p2},${waypoint.p3},${waypoint.p4},${waypoint.latitude},${waypoint.longitude},${waypoint.alt},${waypoint.frame},${waypoint.grad},${waypoint.angle},${waypoint.dist},${waypoint.az}`;
+  //       })
+  //       .join(";"),
+  //     duration: "01:00:00", // Mock duration
+  //     mission_status: "Planned", // Mock mission status
+  //     weather_conditions: "Sunny", // Mock weather conditions
+  //     field_component: 1, // Mock field component (adjust as needed)
+  //   };
+
+  //   // Send data to the backend API
+  //   try {
+  //     const response = await axios.post(
+  //       "http://3.145.131.67:8000/api/missions/",
+  //       dataForAPI
+  //     );
+  //     console.log("Data sent to API:", response.data);
+  //   } catch (error) {
+  //     console.error("Error sending data to API:", error);
+  //   }
+
+  //   // Prepare and send data to MQTT broker
+  //   const mqttData = createMission(waypoints);
+  //   console.log("Formatted MQTT Data:", mqttData);
+  //   const client = mqtt.connect("ws://3.145.131.67:9001");
+
+  //   client.on("connect", () => {
+  //     client.publish("mission/waypoints", mqttData, {}, (err) => {
+  //       if (err) {
+  //         console.error("Error publishing to MQTT:", err);
+  //       } else {
+  //         console.log("Data sent to MQTT broker");
+  //       }
+  //       client.end(); // Close the connection after publishing
+  //     });
+  //   });
+  // };
   return (
     <>
       <Box sx={{ flexGrow: 1 }}>
@@ -121,6 +287,7 @@ const CreateMissionDrawer = () => {
               </Typography>
             </Item>
           </Grid>
+
           {/* ------------------------------------------------------------------------------end of title grid item -----*/}
           <Grid xs={7} sm={7} md={7} lg={7} xl={7}>
             <Item sx={{ background: "transparent" }}>
@@ -274,14 +441,14 @@ const CreateMissionDrawer = () => {
                   <button className="create-mission-buttons">Load</button>
 
                   <button
-                    onClick={handleOpen}
+                    onClick={handleOpenAndPlanClick}
                     className="create-mission-buttons-plan"
                   >
                     Plan
                   </button>
                   <Modal open={open} onClose={handleClose}>
                     <Box sx={modalStyle}>
-                      {/* Content inside your modal */}
+                      {/* Content inside modal */}
 
                       <Box
                         sx={{
@@ -292,7 +459,90 @@ const CreateMissionDrawer = () => {
                           borderRight: "1px solid #797979", // Adds a border between the boxes
                         }}
                       >
-                        {/* Content of the first box */}
+                        {/*//? STEPPER STARTS HERE (FIRST BOX)*/}
+                        <Box sx={{ maxWidth: 400 }}>
+                          <Stepper
+                            activeStep={activeStep}
+                            orientation="vertical"
+                          >
+                            {steps.map((step, index) => (
+                              <Step key={step.label}>
+                                <StepLabel
+                                  optional={
+                                    index === 2 ? (
+                                      <Typography variant="caption">
+                                        Last step
+                                      </Typography>
+                                    ) : null
+                                  }
+                                >
+                                  {step.label}
+                                </StepLabel>
+                                <StepContent>
+                                  <Typography>{step.description}</Typography>
+                                  <Box sx={{ mb: 2 }}>
+                                    <div>
+                                      <Button
+                                        variant="contained"
+                                        onClick={handleNext}
+                                        sx={{ mt: 1, mr: 1 }}
+                                      >
+                                        {index === steps.length - 1
+                                          ? "Finish"
+                                          : "Continue"}
+                                      </Button>
+                                      <Button
+                                        disabled={index === 0}
+                                        onClick={handleBack}
+                                        sx={{ mt: 1, mr: 1 }}
+                                      >
+                                        Back
+                                      </Button>
+                                    </div>
+                                  </Box>
+                                </StepContent>
+                              </Step>
+                            ))}
+                          </Stepper>
+                          {activeStep === steps.length && (
+                            <Paper
+                              square
+                              elevation={0}
+                              sx={{
+                                p: 1,
+                                background: "transparent",
+                              }}
+                            >
+                              <Typography>
+                                All steps completed - your mission has been
+                                planned and will be scheduled for takeoff when
+                                ready
+                              </Typography>
+                              <Button
+                                onClick={handleClose}
+                                sx={{
+                                  mt: 1,
+                                  mr: 1,
+                                  background: "rgba(0, 168, 177, 0.65)",
+                                  color: "#FFF",
+                                }}
+                              >
+                                Dashboard
+                              </Button>
+                              <Button
+                                onClick={handleReset}
+                                sx={{
+                                  mt: 1,
+                                  mr: 1,
+                                  background: "#797979",
+                                  color: "#fff",
+                                }}
+                              >
+                                Reset
+                              </Button>
+                            </Paper>
+                          )}
+                        </Box>
                       </Box>
                       <Grow
                         in={true}
@@ -309,8 +559,11 @@ const CreateMissionDrawer = () => {
                             justifyContent: "center",
                           }}
                         >
+                          {/*//? TIME/DATE STARTS HERE (SECOND BOX)*/}
                           <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DateCalendar
+                              value={selectedDate}
+                              onChange={handleDateChange}
                               showDaysOutsideCurrentMonth
                               views={["day", "month"]}
                               sx={{
@@ -331,6 +584,8 @@ const CreateMissionDrawer = () => {
                               }}
                             >
                               <TimePicker
+                                value={selectedTime}
+                                onChange={handleTimeChange}
                                 label="Select a time.."
                                 name="Select a time.."
                                 sx={{

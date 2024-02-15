@@ -689,9 +689,33 @@ body {
 .css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root {
   color: #fff !important;
 }
-/* .css-z3c6am-MuiFormControl-root-MuiTextField-root {
-  width: 100% !important;
-} */
+/* current day on DatePicker */
+.css-jgls56-MuiButtonBase-root-MuiPickersDay-root {
+  color: #48f7f5 !important;
+}
+/* //?  CSS FOR STEPPER */
+/* Labels for stepper */
+.css-1hv8oq8-MuiStepLabel-label {
+  color: #fff !important;
+  font-weight: bold !important;
+}
+/* completed checkbox icons on stepper */
+.css-1u4zpwo-MuiSvgIcon-root-MuiStepIcon-root {
+  color: rgba(0, 168, 177, 0.65) !important;
+}
+/* p elements on stepper */
+.css-ahj2mt-MuiTypography-root {
+  color: #e0e0e0 !important;
+}
+/* buttons on stepper */
+.css-1f5ro5o-MuiButtonBase-root-MuiButton-root {
+  background-color: rgba(0, 168, 177, 0.65) !important;
+}
+/* back button on stepper */
+.css-18st3fs-MuiButtonBase-root-MuiButton-root {
+  color: rgba(0, 168, 177, 0.65) !important;
+}
+
 /* //?MEDIA QUERIES START */
 @media screen and (min-width: 1700px) {
   .navbar-grid {
