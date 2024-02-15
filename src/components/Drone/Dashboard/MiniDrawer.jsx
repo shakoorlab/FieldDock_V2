@@ -198,6 +198,7 @@ export default function MiniDrawer() {
             sx={{
               display: { xs: "none", md: "flex" },
               mr: 1,
+              ml: -1,
               width: 20, // Example to control size
               height: 20, // Maintain aspect ratio
             }}
@@ -205,7 +206,7 @@ export default function MiniDrawer() {
             alt="FD Logo"
           />
           <Typography variant="h6" noWrap component="div">
-            FieldDock Mission Planner
+            FieldDock Mission Dashboard
           </Typography>
         </Toolbar>
       </AppBar>
