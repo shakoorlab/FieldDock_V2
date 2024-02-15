@@ -683,6 +683,15 @@ body {
   color: #fff !important;
 }
 
+.css-i4bv87-MuiSvgIcon-root,
+.css-nxo287-MuiInputBase-input-MuiOutlinedInput-input,
+.css-1jy569b-MuiFormLabel-root-MuiInputLabel-root,
+.css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root {
+  color: #fff !important;
+}
+/* .css-z3c6am-MuiFormControl-root-MuiTextField-root {
+  width: 100% !important;
+} */
 /* //?MEDIA QUERIES START */
 @media screen and (min-width: 1700px) {
   .navbar-grid {
