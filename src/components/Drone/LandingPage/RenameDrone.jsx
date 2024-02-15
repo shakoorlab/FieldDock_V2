@@ -1,6 +1,6 @@
 import React from "react";
 
-import { useNavigate } from "react-router-dom"; //!remove
+import { useNavigate } from "react-router-dom";
 
 function RenameDrone() {
   const navigate = useNavigate(); //! remove
@@ -18,9 +18,7 @@ function RenameDrone() {
             placeholder="Enter Drone Name"
             className="input-group-input"
           />
-          <button className="rename-drone-button" onClick={navToDroneDash}>
-            Rename
-          </button>
+          <button className="rename-drone-button">Rename</button>
         </div>
       </div>
     </>
