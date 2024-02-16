@@ -5,6 +5,7 @@ import {
   Route,
   Outlet,
 } from "react-router-dom";
+import { LoadScript } from "@react-google-maps/api";
 
 import "./App.css";
 import Layout from "./components/Layout/Layout";
@@ -30,30 +31,36 @@ const LayoutWithNavbar = () => (
   </Layout>
 );
 
+const googleMapsApiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+
 const App = () => {
   return (
     <Router>
-      <Routes>
-        {/* Directly applying LayoutWithNavbar for routes that need the Navbar */}
-        <Route element={<LayoutWithNavbar />}>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/Imaging" element={<Imaging />} />
-          <Route path="/Drone" element={<Drone />} />
-          <Route path="/Sensors" element={<Sensors />} />
-          <Route path="/Settings" element={<Settings />} />
-          <Route path="/Realtime-Settings" element={<RealtimeSettings />} />
-          <Route path="/Imaging-Settings" element={<ImagingSettings />} />
-          <Route path="/Diagnostics" element={<Diagnostics />} />
-          <Route path="/Users" element={<Users />} />
-          <Route path="/Download" element={<Download />} />
-        </Route>
-        {/* Separate Route outside LayoutWithNavbar for components without NavBar and layout */}
-        <Route path="/drone-dashboard" element={<DroneDashboard />} />
-        <Route
-          path="/create-mission-drawer"
-          element={<CreateMissionDrawer />}
-        />
-      </Routes>
+      <LoadScript googleMapsApiKey={googleMapsApiKey}>
+        <Routes>
+          {/* Directly applying LayoutWithNavbar for routes that need the Navbar */}
+          <Route element={<LayoutWithNavbar />}>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/Imaging" element={<Imaging />} />
+            <Route path="/Drone" element={<Drone />} />
+            <Route path="/Sensors" element={<Sensors />} />
+            <Route path="/Settings" element={<Settings />} />
+            <Route path="/Realtime-Settings" element={<RealtimeSettings />} />
+            <Route path="/Imaging-Settings" element={<ImagingSettings />} />
+            <Route path="/Diagnostics" element={<Diagnostics />} />
+            <Route path="/Users" element={<Users />} />
+            <Route path="/Download" element={<Download />} />
+          </Route>
+          {/* Separate Route outside LayoutWithNavbar for components without NavBar and layout */}
+
+          <Route path="/drone-dashboard" element={<DroneDashboard />} />
+
+          <Route
+            path="/create-mission-drawer"
+            element={<CreateMissionDrawer />}
+          />
+        </Routes>
+      </LoadScript>
     </Router>
   );
 };
