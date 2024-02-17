@@ -1,10 +1,5 @@
 import React, { useState, useCallback } from "react";
-import {
-  GoogleMap,
-  LoadScript,
-  Marker,
-  Polyline,
-} from "@react-google-maps/api";
+import { GoogleMap, Marker, Polyline } from "@react-google-maps/api";
 import axios from "axios";
 
 const containerStyle = {
@@ -65,34 +60,32 @@ const MapComponent = ({
 
   return (
     <div style={containerStyle}>
-      <LoadScript googleMapsApiKey={googleMapsApiKey}>
-        <GoogleMap
-          mapContainerStyle={containerStyle}
-          center={center}
-          zoom={10}
-          onClick={onMapClick}
-        >
-          {markerPositions.map((position, index) => (
-            <Marker key={index} position={position} label={`${index + 1}`} />
-          ))}
-          <Polyline
-            path={markerPositions}
-            options={{
-              strokeColor: "#FF0000",
-              strokeOpacity: 0.8,
-              strokeWeight: 2,
-              fillColor: "#FF0000",
-              fillOpacity: 0.35,
-              clickable: false,
-              draggable: false,
-              editable: false,
-              visible: true,
-              radius: 30000,
-              zIndex: 1,
-            }}
-          />
-        </GoogleMap>
-      </LoadScript>
+      <GoogleMap
+        mapContainerStyle={containerStyle}
+        center={center}
+        zoom={10}
+        onClick={onMapClick}
+      >
+        {markerPositions.map((position, index) => (
+          <Marker key={index} position={position} label={`${index + 1}`} />
+        ))}
+        <Polyline
+          path={markerPositions}
+          options={{
+            strokeColor: "#FF0000",
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: "#FF0000",
+            fillOpacity: 0.35,
+            clickable: false,
+            draggable: false,
+            editable: false,
+            visible: true,
+            radius: 30000,
+            zIndex: 1,
+          }}
+        />
+      </GoogleMap>
       <form onSubmit={handleLocationSubmit} style={searchBoxStyles}>
         <input
           type="text"
