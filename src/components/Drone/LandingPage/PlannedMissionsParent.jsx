@@ -65,7 +65,7 @@ function PlannedMissionsParent() {
         >
           <div
             style={{
-              height: "auto",
+              height: "500px", //!change in 27inch screen
               overflowY: "auto",
               padding: "10px 5px",
             }}
