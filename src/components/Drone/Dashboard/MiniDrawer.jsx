@@ -25,10 +25,6 @@ import FlightIcon from "@mui/icons-material/Flight";
 import AirplaneTicketIcon from "@mui/icons-material/AirplaneTicket";
 import NavigationIcon from "@mui/icons-material/Navigation";
 import SpaceDashboardIcon from "@mui/icons-material/SpaceDashboard";
-// import { LocalizationProvider } from "@mui/x-date-pickers-pro";
-// import { AdapterDayjs } from "@mui/x-date-pickers-pro/AdapterDayjs";
-// import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
-// import DroneFieldDock from "../../../assets/svg/Drone_FieldDock.svg";
 
 // import Grow from "@mui/material/Grow";
 import OverviewDrawer from "../Dashboard/Overview/OverviewDrawer";
@@ -36,6 +32,7 @@ import CreateMissionDrawer from "./CreateMission/CreateMissionDrawer";
 import PlannedMissionDrawer from "./PlannedMission/PlannedMissionDrawer";
 import CompletedMissionDrawer from "./CompletedMission/CompletedMissionDrawer";
 import TrackingDrawer from "./Tracking/TrackingDrawer";
+import DroneFieldDock from "../../../assets/svg/Drone_FieldDock.svg";
 
 const drawerWidth = 240;
 
@@ -251,7 +248,7 @@ export default function MiniDrawer() {
 
         <Divider sx={{ borderColor: "#797979" }} />
         <List>
-          {["All mail", "Trash", "Spam"].map((text, index) => (
+          {["Home", "Notifications", "Sensors"].map((text, index) => (
             <ListItem key={text} disablePadding sx={{ display: "block" }}>
               <ListItemButton
                 sx={{
@@ -280,36 +277,20 @@ export default function MiniDrawer() {
       <Box component="main" sx={{ flexGrow: 1, p: 3, height: "100vh" }}>
         <DrawerHeader />
         {renderActivePageComponent()}
+        <div //! fix this so it doesnt appear on all page bottoms of drawer component
+          style={{
+            width: "100%",
+            height: "80%",
+            display: "flex",
+            justifyContent: "center",
+            marginTop: "40px",
+          }}
+        >
+          <img src={DroneFieldDock} />
+        </div>
       </Box>
     </Box>
   );
-}
-
-{
-  /* <Grid item xs={12} sm={12} md={12} lg={6} xl={8}>
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <div className="customCalendar">
-                  <Grow
-                    in={true}
-                    style={{ transformOrigin: "0 0 0" }}
-                    timeout={1000}
-                  >
-                    <DateCalendar
-                      showDaysOutsideCurrentMonth
-                      views={["day", "month"]}
-                      sx={{
-                        // width: "90% !important",
-                        borderRadius: "4px",
-                        border: "1px solid #797979",
-                        boxShadow: "0 7px 5px 1px rgba(0, 0, 0, 0.2)",
-                        background:
-                          "linear-gradient(1deg, rgba(0, 0, 0, 0), #1b1b1b)",
-                      }}
-                    />
-                  </Grow>
-                </div>
-              </LocalizationProvider>
-            </Grid> */
 }
 
 {
@@ -318,13 +299,5 @@ export default function MiniDrawer() {
             </Grid>
             <Grid xs={4} md={4}>
               <Item>xs=6 md=8</Item>
-            </Grid> */
-}
-{
-  /* <Grid xs={4} md={4}>
-              <img
-                style={{ width: "100%", height: "100%" }}
-                src={DroneFieldDock}
-              />
             </Grid> */
 }
