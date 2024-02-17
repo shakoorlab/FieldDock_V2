@@ -53,7 +53,7 @@ function Settings() {
                   />
                 }
                 label="
-                  FieldDock v0.5.0 is ready to be installed"
+                  FieldDock v0.5.0 is ready to be installed tonight"
                 sx={{
                   "& .MuiFormControlLabel-label": {
                     fontSize: "0.87rem",
