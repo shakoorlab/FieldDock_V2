@@ -59,7 +59,7 @@ function CompletedMissionsParent() {
         >
           <div
             style={{
-              height: "auto",
+              height: "500px",
               overflowY: "auto",
               padding: "10px 5px",
             }}
