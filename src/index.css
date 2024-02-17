@@ -10,6 +10,11 @@ body {
   background-color: #000;
 }
 
+button:hover {
+  color: #fff; /* originally #25c0e9 */
+  border-color: #25c0e9;
+}
+
 .gradient-overlay {
   border-radius: 8px;
   margin-top: 0.3px;
@@ -177,6 +182,7 @@ body {
   opacity: 45%;
   cursor: pointer;
 }
+
 .toggle-button-icon {
   object-fit: contain;
   width: 100%;
@@ -264,6 +270,10 @@ body {
   border: 1px solid #48f7f5;
   color: #48f7f5;
   font-weight: bold;
+}
+.input-group button:hover {
+  color: #fff;
+  border-color: #25c0e9;
 }
 
 .data-display {
@@ -683,7 +693,7 @@ body {
   color: #fff !important;
 }
 
-.css-i4bv87-MuiSvgIcon-root,
+/* .css-i4bv87-MuiSvgIcon-root, */
 .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input,
 .css-1jy569b-MuiFormLabel-root-MuiInputLabel-root,
 .css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root {
