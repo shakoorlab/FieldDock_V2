@@ -19,9 +19,9 @@ function ImagingSettings() {
   };
 
   const checkboxStyles = {
-    color: "rgba(0, 168, 177, 0.65);",
+    color: "rgba(0, 168, 177, 0.65); !important",
     "&.Mui-checked": {
-      color: "#48f7f5",
+      color: "#48f7f5 !important",
     },
   };
   return (
