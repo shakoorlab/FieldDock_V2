@@ -168,7 +168,8 @@ button:hover {
   align-items: flex-end;
 }
 
-.toggle-button {
+.toggle-button,
+.toggle-button-hovered {
   flex: 1; /* Each button will take up an equal amount of space */
   border: 1px solid #797979;
   margin: 0 4px; /* Spacing between buttons; adjust as needed */
@@ -181,6 +182,11 @@ button:hover {
   display: flex;
   opacity: 45%;
   cursor: pointer;
+}
+
+.toggle-button-hovered {
+  border: 1px solid #48f7f5;
+  opacity: 100%;
 }
 
 .toggle-button-icon {
