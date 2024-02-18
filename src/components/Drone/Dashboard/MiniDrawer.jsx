@@ -1,7 +1,7 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { styled, useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
 // import Grid from "@mui/material/Unstable_Grid2";
 import MuiDrawer from "@mui/material/Drawer";
 import MuiAppBar from "@mui/material/AppBar";
@@ -18,13 +18,15 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
+// import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
+import SettingsIcon from "@mui/icons-material/Settings";
 import MapIcon from "@mui/icons-material/Map";
 import FlightIcon from "@mui/icons-material/Flight";
 import AirplaneTicketIcon from "@mui/icons-material/AirplaneTicket";
 import NavigationIcon from "@mui/icons-material/Navigation";
 import SpaceDashboardIcon from "@mui/icons-material/SpaceDashboard";
+import HomeIcon from "@mui/icons-material/Home";
 
 // import Grow from "@mui/material/Grow";
 import OverviewDrawer from "../Dashboard/Overview/OverviewDrawer";
@@ -109,6 +111,7 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 export default function MiniDrawer() {
+  const navigate = useNavigate();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   // State to manage which component to display
@@ -134,7 +137,7 @@ export default function MiniDrawer() {
 
   const menuItems = [
     {
-      text: "Missions Overview",
+      text: "Overview",
       Icon: SpaceDashboardIcon,
       component: <OverviewDrawer />,
     },
@@ -248,7 +251,7 @@ export default function MiniDrawer() {
 
         <Divider sx={{ borderColor: "#797979" }} />
         <List>
-          {["Home", "Notifications", "Sensors"].map((text, index) => (
+          {["Home", "Notifications", "Settings"].map((text, index) => (
             <ListItem key={text} disablePadding sx={{ display: "block" }}>
               <ListItemButton
                 sx={{
@@ -256,6 +259,9 @@ export default function MiniDrawer() {
                   justifyContent: open ? "initial" : "center",
                   px: 2.5,
                   color: "#FFF",
+                }}
+                onClick={() => {
+                  if (text === "Home") navigate("/");
                 }}
               >
                 <ListItemIcon
@@ -266,7 +272,13 @@ export default function MiniDrawer() {
                     color: "#FFF",
                   }}
                 >
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                  {index === 0 ? ( //! work on this weird list here
+                    <HomeIcon />
+                  ) : index % 2 === 0 ? (
+                    <SettingsIcon />
+                  ) : (
+                    <MailIcon />
+                  )}
                 </ListItemIcon>
                 <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
               </ListItemButton>
