@@ -23,6 +23,8 @@ import Users from "./scenes/dashboard/Users";
 import Download from "./scenes/dashboard/Download";
 import DroneDashboard from "./components/Drone/Dashboard/DroneDash";
 
+import DroneLogsParent from "./components/Drone/Logs/DroneLogsParent";
+
 const LayoutWithNavbar = () => (
   <Layout>
     <Navbar />
@@ -49,6 +51,7 @@ const App = () => {
             <Route path="/Diagnostics" element={<Diagnostics />} />
             <Route path="/Users" element={<Users />} />
             <Route path="/Download" element={<Download />} />
+            <Route path="/drone-logs" element={<DroneLogsParent />} />
           </Route>
           {/* Separate Route outside LayoutWithNavbar for components without NavBar and layout */}
 
