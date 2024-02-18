@@ -1,5 +1,5 @@
-import React from "react";
-import { GoogleMap, Marker, Polyline } from "@react-google-maps/api";
+import React, { useMemo } from "react";
+import { GoogleMap } from "@react-google-maps/api";
 
 const containerStyle = {
   position: "relative",
@@ -10,50 +10,28 @@ const containerStyle = {
   borderRadius: "4px",
 };
 
-// Assuming defaultCenter should be dynamically calculated or set to a meaningful default
+// This can be defined outside if it doesn't change
 const defaultCenter = {
   lat: -34.397,
   lng: 150.644,
 };
 
-// Accept waypoints as a prop
-const PlannedMap = ({ waypoints }) => {
-  // Determine the map center based on the first waypoint, if available
-  const mapCenter =
-    waypoints && waypoints.length > 0
-      ? { lat: waypoints[0].lat, lng: waypoints[0].lng }
-      : defaultCenter;
+const PlannedMap = React.memo(() => {
+  // Use useMemo if defaultCenter needs to be dynamic and changes based on props
+  // const defaultCenter = useMemo(() => ({
+  //   lat: -34.397,
+  //   lng: 150.644,
+  // }), [/* dependencies, if any */]);
 
   return (
     <div style={containerStyle}>
       <GoogleMap
         mapContainerStyle={containerStyle}
-        center={mapCenter}
+        center={defaultCenter}
         zoom={10}
-      >
-        {waypoints.map((waypoint, index) => (
-          // Plot each waypoint as a marker
-          <Marker
-            key={index}
-            position={{ lat: waypoint.lat, lng: waypoint.lng }}
-          />
-        ))}
-        {waypoints.length > 1 && (
-          // Connect all waypoints with a polyline if there are 2 or more waypoints
-          <Polyline
-            path={waypoints}
-            options={{
-              strokeColor: "#FF0000",
-              strokeOpacity: 0.8,
-              strokeWeight: 2,
-              fillColor: "#FF0000",
-              fillOpacity: 0.35,
-            }}
-          />
-        )}
-      </GoogleMap>
+      ></GoogleMap>
     </div>
   );
-};
+});
 
 export default PlannedMap;
