@@ -11,19 +11,24 @@ function PlannedMissionsParent() {
   };
   const [missions, setMissions] = useState([]);
 
-  // Polling the REST API
+  // Polling the REST API for only "Planned" missions
   useEffect(() => {
     const fetchMissions = async () => {
       try {
         const response = await fetch("http://3.145.131.67:8000/api/missions/");
         const missionsData = await response.json();
 
+        // Filter missions by status 'Planned' before processing
+        const plannedMissions = missionsData.filter(
+          (mission) => mission.mission_status === "Planned"
+        );
+
         setMissions((currentMissions) => {
           // Create a map of current mission IDs for quick lookup
           const missionIdSet = new Set(currentMissions.map((m) => m.id));
 
-          // Filter out any missions that are already in the state
-          const newMissions = missionsData.filter(
+          // Further filter out any planned missions that are already in the state
+          const newMissions = plannedMissions.filter(
             (mission) => !missionIdSet.has(mission.id)
           );
 

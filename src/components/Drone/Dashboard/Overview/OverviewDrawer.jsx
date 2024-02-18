@@ -17,7 +17,6 @@ function OverviewDrawer() {
     <>
       <Box sx={{ flexGrow: 1 }}>
         <Grid container spacing={2}>
-          {/* start of title grid item */}
           <Grid xs={12} md={12} lg={12} xl={12}>
             <Item
               sx={{
