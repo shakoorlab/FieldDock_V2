@@ -5,58 +5,53 @@ import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import { styled } from "@mui/material/styles";
 import NoMissionsDisplayed from "../NoMissions";
-import PlannedMissionsCard from "../../LandingPage/PlannedMissionCard";
+import CompletedMissionsCard from "../../LandingPage/CompletedMissionCard";
 import CompletedMap from "./CompletedMap";
-import isEqual from "lodash/isEqual";
 
 function CompletedMissionDrawer() {
   const [missions, setMissions] = useState([]);
 
-  // Polling the REST API for only "Completed" missions
+  // Polling the REST API for only "Planned" missions is only updated if the fetched missions data has actually changed
   useEffect(() => {
     const fetchMissions = async () => {
       try {
         const response = await fetch("http://3.145.131.67:8000/api/missions/");
         const missionsData = await response.json();
 
-        // Filter missions by status 'Planned' before processing
+        // Filter missions by status 'Planned'
         const plannedMissions = missionsData.filter(
           (mission) => mission.mission_status === "Completed"
         );
 
         setMissions((currentMissions) => {
-          // Create a map of current mission IDs for quick lookup
-          const missionIdSet = new Set(currentMissions.map((m) => m.id));
+          let isStateUpdated = false;
+          const updatedMissions = [...currentMissions];
 
-          // Further filter out any planned missions that are already in the state
-          const newMissions = plannedMissions.filter(
-            (mission) => !missionIdSet.has(mission.id)
-          );
+          plannedMissions.forEach((mission) => {
+            const exists = currentMissions.some((m) => m.id === mission.id);
+            if (!exists) {
+              isStateUpdated = true;
+              updatedMissions.push({
+                ...mission,
+                date: mission.mission_date || "Date not set",
+                duration: mission.duration || "Duration not set",
+              });
+            }
+          });
 
-          // Map the new missions to include any additional formatting or properties
-          const formattedNewMissions = newMissions.map((mission) => ({
-            ...mission,
-            date: mission.mission_date || "Date not set",
-            duration: mission.duration || "Duration not set",
-          }));
-
-          // Return the new state which is the old missions plus any new missions
-          return [...currentMissions, ...formattedNewMissions];
+          // Return updated missions if new ones were added, otherwise keep the current state
+          return isStateUpdated ? updatedMissions : currentMissions;
         });
       } catch (error) {
         console.error("Failed to fetch missions", error);
       }
     };
 
-    // Initialize the polling
     const intervalId = setInterval(fetchMissions, 5000);
+    fetchMissions(); // Fetch immediately on mount, then continue at the interval
 
-    // Fetch immediately on mount, then continue at the interval
-    fetchMissions();
-
-    // Clean up the interval on unmount
     return () => clearInterval(intervalId);
-  }, []); // Empty dependency array to ensure this effect is only run on mount and unmount
+  }, []);
 
   const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -116,7 +111,7 @@ function CompletedMissionDrawer() {
                     {missions.length === 0 ? (
                       <NoMissionsDisplayed />
                     ) : (
-                      <PlannedMissionsCard missions={missions} />
+                      <CompletedMissionsCard missions={missions} />
                     )}
                   </div>
                   <div
