@@ -11,10 +11,10 @@ import SensorsNotActive from "../../assets/svg/wireless_not_active.svg";
 import SensorsActive from "../../assets/svg/wireless_active.svg";
 import SettingsNotActive from "../../assets/svg/settings_not_active.svg";
 import SettingsActive from "../../assets/svg/settings_active.svg";
-import sensorSettingsActive from "../../assets/svg/sensor_settings_active.svg";
-import sensorSettingsNotActive from "../../assets/svg/sensor_settings_not_active.svg";
-import imagingSettingsNotActive from "../../assets/svg/imaging_settings_not_active.svg";
-import imagingSettingActive from "../../assets/svg/imaging_settings_active.svg";
+import SensorSettingsActive from "../../assets/svg/sensor_settings_active.svg";
+import SensorSettingsNotActive from "../../assets/svg/sensor_settings_not_active.svg";
+import ImagingSettingsNotActive from "../../assets/svg/imaging_settings_not_active.svg";
+import ImagingSettingsActive from "../../assets/svg/imaging_settings_active.svg";
 import DiagnosticsNotActive from "../../assets/svg/diagnostics_not_active.svg";
 import DiagnosticsActive from "../../assets/svg/diagnostics_active.svg";
 import UsersNotActive from "../../assets/svg/users_not_active.svg";
@@ -59,6 +59,18 @@ function Navbar() {
     navigate("/Download");
   };
 
+  //---------------------------hovering over 10 boxes START------------------------------------
+  const [isHovered1, setIsHovered1] = useState(false);
+  const [isHovered2, setIsHovered2] = useState(false);
+  const [isHovered3, setIsHovered3] = useState(false);
+  const [isHovered4, setIsHovered4] = useState(false);
+  const [isHovered5, setIsHovered5] = useState(false);
+  const [isHovered6, setIsHovered6] = useState(false);
+  const [isHovered7, setIsHovered7] = useState(false);
+  const [isHovered8, setIsHovered8] = useState(false);
+  const [isHovered9, setIsHovered9] = useState(false);
+  const [isHovered10, setIsHovered10] = useState(false);
+  //---------------------------hovering over 10 boxes END------------------------------------
   return (
     <>
       <div className="navbar-grid">
@@ -101,58 +113,68 @@ function Navbar() {
           <div className="row">
             <div className="screen-toggle-buttons-container-top">
               <div
-                className="toggle-button"
-                onMouseEnter={() => setIsHovered(true)}
-                onMouseLeave={() => setIsHovered(false)}
+                className={
+                  isHovered1 ? "toggle-button-hovered" : "toggle-button"
+                }
+                onMouseEnter={() => setIsHovered1(true)}
+                onMouseLeave={() => setIsHovered1(false)}
                 onClick={navToHomePage}
               >
                 <img
                   className="toggle-button-icon"
-                  src={isHovered ? HomePageActive : HomePageNotActive}
+                  src={isHovered1 ? HomePageActive : HomePageNotActive}
                 />
               </div>
               <div
-                className="toggle-button"
-                onMouseEnter={() => setIsHovered(true)}
-                onMouseLeave={() => setIsHovered(false)}
+                className={
+                  isHovered2 ? "toggle-button-hovered" : "toggle-button"
+                }
+                onMouseEnter={() => setIsHovered2(true)}
+                onMouseLeave={() => setIsHovered2(false)}
                 onClick={navToImaging}
               >
                 <img
                   className="toggle-button-icon"
-                  src={isHovered ? ImagingActive : ImagingNotActive}
+                  src={isHovered2 ? ImagingActive : ImagingNotActive}
                 />
               </div>
               <div
-                className="toggle-button"
-                onMouseEnter={() => setIsHovered(true)}
-                onMouseLeave={() => setIsHovered(false)}
+                className={
+                  isHovered3 ? "toggle-button-hovered" : "toggle-button"
+                }
+                onMouseEnter={() => setIsHovered3(true)}
+                onMouseLeave={() => setIsHovered3(false)}
                 onClick={navToDrone}
               >
                 <img
                   className="toggle-button-icon"
-                  src={isHovered ? DroneActive : DroneNotActive}
+                  src={isHovered3 ? DroneActive : DroneNotActive}
                 />
               </div>
               <div
-                className="toggle-button"
-                onMouseEnter={() => setIsHovered(true)}
-                onMouseLeave={() => setIsHovered(false)}
+                className={
+                  isHovered4 ? "toggle-button-hovered" : "toggle-button"
+                }
+                onMouseEnter={() => setIsHovered4(true)}
+                onMouseLeave={() => setIsHovered4(false)}
                 onClick={navToSensors}
               >
                 <img
                   className="" //no classname for some reason
-                  src={isHovered ? SensorsActive : SensorsNotActive}
+                  src={isHovered4 ? SensorsActive : SensorsNotActive}
                 />
               </div>
               <div
-                className="toggle-button"
-                onMouseEnter={() => setIsHovered(true)}
-                onMouseLeave={() => setIsHovered(false)}
+                className={
+                  isHovered5 ? "toggle-button-hovered" : "toggle-button"
+                }
+                onMouseEnter={() => setIsHovered5(true)}
+                onMouseLeave={() => setIsHovered5(false)}
                 onClick={navToSettings}
               >
                 <img
                   className="toggle-button-icon"
-                  src={isHovered ? SettingsActive : SettingsNotActive}
+                  src={isHovered5 ? SettingsActive : SettingsNotActive}
                 />
               </div>
             </div>
@@ -161,63 +183,75 @@ function Navbar() {
           <div className="row">
             <div className="screen-toggle-buttons-container-bottom">
               <div
-                className="toggle-button"
-                onMouseEnter={() => setIsHovered(true)}
-                onMouseLeave={() => setIsHovered(false)}
+                className={
+                  isHovered6 ? "toggle-button-hovered" : "toggle-button"
+                }
+                onMouseEnter={() => setIsHovered6(true)}
+                onMouseLeave={() => setIsHovered6(false)}
                 onClick={navToSensorSettings}
               >
                 <img
                   className="toggle-button-icon"
                   src={
-                    isHovered ? sensorSettingsActive : sensorSettingsNotActive
+                    isHovered6 ? SensorSettingsActive : SensorSettingsNotActive
                   }
                 />
               </div>
               <div
-                className="toggle-button"
-                onMouseEnter={() => setIsHovered(true)}
-                onMouseLeave={() => setIsHovered(false)}
+                className={
+                  isHovered7 ? "toggle-button-hovered" : "toggle-button"
+                }
+                onMouseEnter={() => setIsHovered7(true)}
+                onMouseLeave={() => setIsHovered7(false)}
                 onClick={navToImagingSettings}
               >
                 <img
                   className="toggle-button-icon"
                   src={
-                    isHovered ? imagingSettingActive : imagingSettingsNotActive
+                    isHovered7
+                      ? ImagingSettingsActive
+                      : ImagingSettingsNotActive
                   }
                 />
               </div>
               <div
-                className="toggle-button"
-                onMouseEnter={() => setIsHovered(true)}
-                onMouseLeave={() => setIsHovered(false)}
+                className={
+                  isHovered8 ? "toggle-button-hovered" : "toggle-button"
+                }
+                onMouseEnter={() => setIsHovered8(true)}
+                onMouseLeave={() => setIsHovered8(false)}
                 onClick={navToDiagnostics}
               >
                 <img
                   className="toggle-button-icon"
-                  src={isHovered ? DiagnosticsActive : DiagnosticsNotActive}
+                  src={isHovered8 ? DiagnosticsActive : DiagnosticsNotActive}
                 />
               </div>
               <div
-                className="toggle-button"
-                onMouseEnter={() => setIsHovered(true)}
-                onMouseLeave={() => setIsHovered(false)}
+                className={
+                  isHovered9 ? "toggle-button-hovered" : "toggle-button"
+                }
+                onMouseEnter={() => setIsHovered9(true)}
+                onMouseLeave={() => setIsHovered9(false)}
                 onClick={navToUsers}
               >
                 <img
                   className="toggle-button-icon"
-                  src={isHovered ? UsersActive : UsersNotActive}
+                  src={isHovered9 ? UsersActive : UsersNotActive}
                 />
               </div>
 
               <div
-                className="toggle-button"
-                onMouseEnter={() => setIsHovered(true)}
-                onMouseLeave={() => setIsHovered(false)}
+                className={
+                  isHovered10 ? "toggle-button-hovered" : "toggle-button"
+                }
+                onMouseEnter={() => setIsHovered10(true)}
+                onMouseLeave={() => setIsHovered10(false)}
                 onClick={navToDownload}
               >
                 <img
                   className="toggle-button-icon"
-                  src={isHovered ? DownloadActive : DownloadNotActive}
+                  src={isHovered10 ? DownloadActive : DownloadNotActive}
                 />
               </div>
             </div>
