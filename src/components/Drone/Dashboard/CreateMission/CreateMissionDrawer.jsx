@@ -1,10 +1,11 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { setDateTime } from "../../../../slices/dateTimeSlice";
-// import { createMission } from "./WaypointConfig";
+import { createMission } from "./WaypointConfig";
 import LatLongTable from "../CreateMission/LatLongTable";
 import { setWaypoints } from "../../../../slices/waypointsSlice";
 import Map from "../CreateMission/MapComponent";
+
 import {
   Box,
   Grid,
@@ -25,8 +26,8 @@ import { TimePicker } from "@mui/x-date-pickers/TimePicker";
 import dayjs from "dayjs";
 import Grow from "@mui/material/Grow";
 
-// import axios from "axios";
-// import mqtt from "mqtt";
+import axios from "axios";
+import mqtt from "mqtt";
 
 //
 //
@@ -82,7 +83,7 @@ const CreateMissionDrawer = () => {
   //--------------------logic for modal-----------------------------------
   const [open, setOpen] = useState(false); // Modal is initially closed
 
-  // const handleOpen = () => setOpen(true); // Function to open the modal
+  const handleOpen = () => setOpen(true); // Function to open the modal
   const handleClose = () => setOpen(false); // Function to close the modal
   //
   //
@@ -159,6 +160,9 @@ const CreateMissionDrawer = () => {
   const onMapClick = useCallback((event) => {
     const lat = event.latLng.lat();
     const lng = event.latLng.lng();
+
+    console.log("Clicked location:", { lat, lng }); // Log the clicked location
+
     setData((currentData) => {
       if (
         currentData.length === 1 &&
@@ -190,11 +194,10 @@ const CreateMissionDrawer = () => {
     ]);
   }, []);
 
-  //---------------------logic for saving coordiantes into state-----------------------------------------------
-  const handleOpenAndPlanClick = () => {
-    // This opens the modal or performs the action associated with opening
-    setOpen(true);
+  //---------------------logic for sending waypoints and dateTime data to MQTT and backend----------------------
 
+  const handleFinish = async () => {
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
     // This prepares the waypoints data and dispatches it to the Redux store
     const waypointsData = data.map((item) => ({
       id: item.id,
@@ -211,56 +214,66 @@ const CreateMissionDrawer = () => {
       angle: item.angle,
       dist: item.dist,
       az: item.az,
-      // Include any other fields you need
     }));
 
-    console.log("Dispatching waypoints:", waypointsData);
-    dispatch(setWaypoints(waypointsData));
+    // Prepare data for API request, but only send latitude and longitude
+    const dataForAPI = {
+      mission_date: selectedDate, // Use actual state data
+      waypoints: waypointsData
+        .map((waypoint) => `${waypoint.latitude},${waypoint.longitude}`)
+        .join(";"),
+      duration: "01:00:00", // Example duration
+      mission_status: "Planned", // Example mission status
+      weather_conditions: "Sunny", // Example weather conditions
+      field_component: 1, // Example field component
+    };
+
+    // Send data to the backend API
+    try {
+      const response = await axios.post(
+        "http://3.145.131.67:8000/api/missions/",
+        dataForAPI
+      );
+      console.log("Data sent to API:", response.data);
+    } catch (error) {
+      console.error("Error sending data to API:", error);
+    }
+
+    // Prepare and send data to MQTT broker
+    const mqttData = createMission(waypointsData); // This will use the original waypointsData, including all properties
+    console.log("Formatted MQTT Data:", mqttData);
+    const client = mqtt.connect("ws://3.145.131.67:9001");
+
+    client.on("connect", () => {
+      console.log("Connected to MQTT broker");
+      client.publish("mission/waypoints", mqttData, {}, (err) => {
+        if (err) {
+          console.error("Error publishing to MQTT:", err);
+        } else {
+          console.log("Data sent to MQTT broker");
+        }
+        client.end(); // Close the connection after publishing
+      });
+    });
+
+    // Connect to the MQTT broker
+    // const client = mqtt.connect("ws://3.145.131.67:9001");
+
+    // client.on("connect", () => {
+    //   console.log("Connected to MQTT broker");
+    //   // Perform actions upon successful connection
+    // });
+
+    // client.on("error", (error) => {
+    //   console.error("Connection to MQTT broker failed:", error);
+    // });
+
+    // client.on("close", () => {
+    //   console.log("Connection to MQTT broker closed.");
+    //   // Handle cleanup or retry logic here
+    // });
   };
-
   //---------------------logic for sending waypoints and dateTime data to MQTT and backend----------------------
-  // const handleFinish = async () => {
-  //   // Prepare data for API request
-  //   const dataForAPI = {
-  //     mission_date: missionDate, // Replace with actual state data or keep mock value
-  //     waypoints: waypoints
-  //       .map((waypoint) => {
-  //         return `${waypoint.id},${waypoint.command},${waypoint.p1},${waypoint.p2},${waypoint.p3},${waypoint.p4},${waypoint.latitude},${waypoint.longitude},${waypoint.alt},${waypoint.frame},${waypoint.grad},${waypoint.angle},${waypoint.dist},${waypoint.az}`;
-  //       })
-  //       .join(";"),
-  //     duration: "01:00:00", // Mock duration
-  //     mission_status: "Planned", // Mock mission status
-  //     weather_conditions: "Sunny", // Mock weather conditions
-  //     field_component: 1, // Mock field component (adjust as needed)
-  //   };
-
-  //   // Send data to the backend API
-  //   try {
-  //     const response = await axios.post(
-  //       "http://3.145.131.67:8000/api/missions/",
-  //       dataForAPI
-  //     );
-  //     console.log("Data sent to API:", response.data);
-  //   } catch (error) {
-  //     console.error("Error sending data to API:", error);
-  //   }
-
-  //   // Prepare and send data to MQTT broker
-  //   const mqttData = createMission(waypoints);
-  //   console.log("Formatted MQTT Data:", mqttData);
-  //   const client = mqtt.connect("ws://3.145.131.67:9001");
-
-  //   client.on("connect", () => {
-  //     client.publish("mission/waypoints", mqttData, {}, (err) => {
-  //       if (err) {
-  //         console.error("Error publishing to MQTT:", err);
-  //       } else {
-  //         console.log("Data sent to MQTT broker");
-  //       }
-  //       client.end(); // Close the connection after publishing
-  //     });
-  //   });
-  // };
   return (
     <>
       <Box sx={{ flexGrow: 1 }}>
@@ -441,7 +454,7 @@ const CreateMissionDrawer = () => {
                   <button className="create-mission-buttons">Load</button>
 
                   <button
-                    onClick={handleOpenAndPlanClick}
+                    onClick={handleOpen}
                     className="create-mission-buttons-plan"
                   >
                     Plan
@@ -482,18 +495,27 @@ const CreateMissionDrawer = () => {
                                   <Typography>{step.description}</Typography>
                                   <Box sx={{ mb: 2 }}>
                                     <div>
-                                      <Button
-                                        variant="contained"
-                                        onClick={handleNext}
-                                        sx={{ mt: 1, mr: 1 }}
-                                      >
-                                        {index === steps.length - 1
-                                          ? "Finish"
-                                          : "Continue"}
-                                      </Button>
+                                      {index < steps.length - 1 && (
+                                        <Button
+                                          variant="contained"
+                                          onClick={handleNext} // Continue with the next step
+                                          sx={{ mt: 1, mr: 1 }}
+                                        >
+                                          Continue
+                                        </Button>
+                                      )}
+                                      {index === steps.length - 1 && (
+                                        <Button
+                                          variant="contained"
+                                          onClick={handleFinish} // Handle finish logic
+                                          sx={{ mt: 1, mr: 1 }}
+                                        >
+                                          Finish
+                                        </Button>
+                                      )}
                                       <Button
                                         disabled={index === 0}
-                                        onClick={handleBack}
+                                        onClick={handleBack} // Go back to the previous step
                                         sx={{ mt: 1, mr: 1 }}
                                       >
                                         Back
@@ -595,6 +617,9 @@ const CreateMissionDrawer = () => {
                                   boxShadow: "0 7px 5px 1px rgba(0, 0, 0, 0.2)",
                                   background:
                                     "linear-gradient(1deg, rgba(0, 0, 0, 0), #1b1b1b)",
+                                  ".MuiSvgIcon-root": {
+                                    color: "#FFF",
+                                  },
                                 }}
                               />
                             </Box>
