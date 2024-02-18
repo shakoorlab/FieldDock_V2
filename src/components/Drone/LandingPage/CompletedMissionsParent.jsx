@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import NoMissionsPlanned from "./NoMissions";
-import PlannedMissionsCard from "./PlannedMissionCard";
+import CompletedMissionsCard from "./CompletedMissionCard";
 
 function CompletedMissionsParent() {
   const [missions, setMissions] = useState([]);
@@ -72,7 +72,7 @@ function CompletedMissionsParent() {
             {missions.length === 0 ? (
               <NoMissionsPlanned />
             ) : (
-              <PlannedMissionsCard missions={missions} />
+              <CompletedMissionsCard missions={missions} />
             )}
           </div>
           <div
