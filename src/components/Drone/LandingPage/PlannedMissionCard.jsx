@@ -43,6 +43,7 @@ const PlannedMissionsCard = ({ missions }) => {
               marginTop: "5px",
               marginBottom: "21px",
               position: "relative",
+              cursor: "pointer",
               flexShrink: 0,
               boxShadow: "3px 3px 6px 0 rgba(0, 0, 0, 0.65)",
               ":hover": {
