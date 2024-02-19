@@ -205,7 +205,14 @@ export default function MiniDrawer() {
             src="src/assets/images/fd_logo.png"
             alt="FD Logo"
           />
-          <Typography variant="h6" noWrap component="div">
+          <Typography
+            sx={{
+              mt: 0.3,
+            }}
+            variant="h6"
+            noWrap
+            component="div"
+          >
             FieldDock Mission Dashboard
           </Typography>
         </Toolbar>
