@@ -589,7 +589,6 @@ const CreateMissionDrawer = () => {
                               showDaysOutsideCurrentMonth
                               views={["day", "month"]}
                               sx={{
-                                // width: "90% !important",
                                 borderRadius: "4px",
                                 border: "1px solid #797979",
                                 boxShadow: "0 7px 5px 1px rgba(0, 0, 0, 0.2)",
@@ -601,8 +600,8 @@ const CreateMissionDrawer = () => {
                             <Box
                               sx={{
                                 display: "flex",
-                                width: "100%", // Ensure the wrapper fills the parent box
-                                justifyContent: "center", // Center the TimePicker horizontally
+                                width: "100%",
+                                justifyContent: "center",
                               }}
                             >
                               <TimePicker
