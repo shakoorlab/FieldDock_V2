@@ -4,6 +4,7 @@ import Grid from "@mui/material/Unstable_Grid2";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import { styled } from "@mui/material/styles";
+import MissionStatusChecker from "./MissionStatusChecker";
 
 function TrackingDrawer() {
   const Item = styled(Paper)(({ theme }) => ({
@@ -37,6 +38,7 @@ function TrackingDrawer() {
               </Typography>
             </Item>
           </Grid>
+          <MissionStatusChecker />
         </Grid>
       </Box>
     </>
