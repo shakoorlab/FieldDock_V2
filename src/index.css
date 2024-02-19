@@ -14,7 +14,23 @@ button:hover {
   color: #fff; /* originally #25c0e9 */
   border-color: #25c0e9;
 }
-
+.first-icon {
+  font-size: 0.85rem;
+  color: #ececed;
+  cursor: pointer;
+}
+.first-icon:hover {
+  color: #25c0e9;
+}
+.second-icon {
+  font-size: 0.85rem;
+  color: #ececed;
+  cursor: pointer;
+  margin-left: 10px;
+}
+.second-icon:hover {
+  color: #25c0e9;
+}
 .gradient-overlay {
   border-radius: 8px;
   margin-top: 0.3px;
