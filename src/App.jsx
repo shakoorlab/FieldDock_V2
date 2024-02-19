@@ -56,7 +56,6 @@ const App = () => {
           {/* Separate Route outside LayoutWithNavbar for components without NavBar and layout */}
 
           <Route path="/drone-dashboard" element={<DroneDashboard />} />
-
           {/* <Route
             path="/create-mission-drawer"
             element={<CreateMissionDrawer />}
