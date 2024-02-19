@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useState } from "react";
 import { GoogleMap } from "@react-google-maps/api";
 
 const containerStyle = {
@@ -16,22 +16,18 @@ const defaultCenter = {
   lng: 150.644,
 };
 
-const PlannedMap = React.memo(() => {
-  // Use useMemo if defaultCenter needs to be dynamic and changes based on props
-  // const defaultCenter = useMemo(() => ({
-  //   lat: -34.397,
-  //   lng: 150.644,
-  // }), [/* dependencies, if any */]);
+const PlannedMap = () => {
+  const [center, setCenter] = useState(defaultCenter);
 
   return (
     <div style={containerStyle}>
       <GoogleMap
         mapContainerStyle={containerStyle}
-        center={defaultCenter}
+        center={center}
         zoom={10}
       ></GoogleMap>
     </div>
   );
-});
+};
 
 export default PlannedMap;
