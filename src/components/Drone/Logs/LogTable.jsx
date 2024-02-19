@@ -287,24 +287,13 @@ function LogsTable() {
                 <TableCell>
                   <FontAwesomeIcon
                     icon={faMagnifyingGlass}
-                    style={{ fontSize: "0.85rem", color: "#ECECED" }}
+                    className="first-icon"
                   />
                   <FontAwesomeIcon
                     icon={faFileArrowDown}
-                    style={{
-                      marginLeft: "10px",
-                      fontSize: "0.85rem",
-                      color: "#ECECED",
-                    }}
+                    className="second-icon"
                   />
-                  <FontAwesomeIcon
-                    icon={faTrashCan}
-                    style={{
-                      marginLeft: "10px",
-                      fontSize: "0.85rem",
-                      color: "#ECECED",
-                    }}
-                  />
+                  <FontAwesomeIcon icon={faTrashCan} className="second-icon" />
                 </TableCell>
               </TableRow>
             );
