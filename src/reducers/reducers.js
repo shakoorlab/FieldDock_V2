@@ -4,6 +4,7 @@ import { SET_DATE_TIME, SET_WAYPOINTS } from "../actions/actionTypes";
 const initialState = {
   dateTime: null,
   waypoints: [],
+  status: null,
 };
 
 const missionReducer = (state = initialState, action) => {
