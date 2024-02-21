@@ -7,10 +7,10 @@ export function createMission(data) {
   };
 
   const commandMapping = {
-    "Return to Launch": 20,
+    // "Return to Launch": 20,
     Land: 21,
     Waypoint: 16,
-    "Take Off": 22,
+    // "Take Off": 22,
   };
 
   // Create the output array
