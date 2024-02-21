@@ -216,12 +216,14 @@ const CreateMissionDrawer = () => {
       az: item.az,
     }));
 
+    const rawWaypoints = createMission(waypointsData);
     // Prepare data for API request, but only send latitude and longitude
     const dataForAPI = {
       mission_date: selectedDate, // Use actual state data
       waypoints: waypointsData
         .map((waypoint) => `${waypoint.latitude},${waypoint.longitude}`)
         .join(";"),
+      waypoints_raw: rawWaypoints,
       duration: "01:00:00", // Example duration
       mission_status: "Planned", // Example mission status
       weather_conditions: "Sunny", // Example weather conditions
@@ -240,21 +242,21 @@ const CreateMissionDrawer = () => {
     }
 
     // Prepare and send data to MQTT broker
-    const mqttData = createMission(waypointsData); // This will use the original waypointsData, including all properties
-    console.log("Formatted MQTT Data:", mqttData);
-    const client = mqtt.connect("ws://3.145.131.67:9001");
+    // const mqttData = createMission(waypointsData); // This will use the original waypointsData, including all properties
+    // console.log("Formatted MQTT Data:", mqttData);
+    // const client = mqtt.connect("ws://3.145.131.67:9001");
 
-    client.on("connect", () => {
-      console.log("Connected to MQTT broker");
-      client.publish("mission/waypoints", mqttData, {}, (err) => {
-        if (err) {
-          console.error("Error publishing to MQTT:", err);
-        } else {
-          console.log("Data sent to MQTT broker");
-        }
-        client.end(); // Close the connection after publishing
-      });
-    });
+    // client.on("connect", () => {
+    //   console.log("Connected to MQTT broker");
+    //   client.publish("mission/waypoints", mqttData, {}, (err) => {
+    //     if (err) {
+    //       console.error("Error publishing to MQTT:", err);
+    //     } else {
+    //       console.log("Data sent to MQTT broker");
+    //     }
+    //     client.end(); // Close the connection after publishing
+    //   });
+    // });
 
     // Connect to the MQTT broker
     // const client = mqtt.connect("ws://3.145.131.67:9001");
