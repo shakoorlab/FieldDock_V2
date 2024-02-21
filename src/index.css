@@ -747,6 +747,9 @@ button:hover {
 .css-18st3fs-MuiButtonBase-root-MuiButton-root {
   color: rgba(0, 168, 177, 0.65) !important;
 }
+.css-1pysi21-MuiFormLabel-root-MuiInputLabel-root {
+  color: #fff !important;
+}
 
 /* //?MEDIA QUERIES START */
 @media screen and (min-width: 1700px) {
