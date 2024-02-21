@@ -5,12 +5,12 @@ function NoMissionInProgress() {
   //--------------------logic for modal-----------------------------------
   const [open, setOpen] = useState(true); // Modal is initially closed
 
-  const handleOpen = () => setOpen(true); // Function to open the modal
+  // const handleOpen = () => setOpen(true); // Function to open the modal
   const handleClose = () => setOpen(false); // Function to close the modal
   const modalStyle = {
     position: "absolute",
     top: "50%",
-    left: "51%",
+    left: "51.5%",
     borderRadius: "4px",
     transform: "translate(-50%, -50%)",
     width: "30%", //40% for bigger than 1700 screens
