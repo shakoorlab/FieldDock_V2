@@ -44,23 +44,97 @@ const TrackingMap = () => {
   // function to control the timing.
   // Helper function to create a delay
 
+  // useEffect(() => {
+  //   const fetchWaypoints = async () => {
+  //     try {
+  //       const response = await fetch(
+  //         "http://3.145.131.67:8000/api/dronestatus/"
+  //       );
+  //       const data = await response.json();
+  //       if (Array.isArray(data)) {
+  //         // Optionally set the hexacopter's initial position to the first waypoint
+  //         if (data.length > 0) {
+  //           const firstWaypoint = {
+  //             lat: parseFloat(data[0].latitude),
+  //             lng: parseFloat(data[0].longitude),
+  //           };
+  //           if (!isNaN(firstWaypoint.lat) && !isNaN(firstWaypoint.lng)) {
+  //             setHexacopterPosition(firstWaypoint);
+  //           }
+  //         }
+
+  //         for (let waypoint of data) {
+  //           const parsedWaypoint = {
+  //             lat: parseFloat(waypoint.latitude),
+  //             lng: parseFloat(waypoint.longitude),
+  //           };
+
+  //           if (!isNaN(parsedWaypoint.lat) && !isNaN(parsedWaypoint.lng)) {
+
+  //             await delay(1000); // Delay of 1 second between each waypoint
+  //             // Update the hexacopter's position to simulate movement
+  //             setHexacopterPosition(parsedWaypoint);
+
+  //             // Incrementally build up the polyline path
+  //             setWaypoints((prevWaypoints) => [
+  //               ...prevWaypoints,
+  //               parsedWaypoint,
+  //             ]);
+  //           }
+  //         }
+  //       }
+  //     } catch (error) {
+  //       console.error("Failed to fetch waypoints:", error);
+  //     }
+  //   };
+
+  //   fetchWaypoints();
+
+  //   const fetchStops = async () => {
+  //     try {
+  //       const response = await fetch("http://3.145.131.67:8000/api/missions/");
+  //       const data = await response.json();
+  //       if (Array.isArray(data)) {
+  //         const stops = [];
+  //         data.forEach((mission) => {
+  //           const waypoints = mission.waypoints.split(";").map((wp) => {
+  //             const [lat, lng] = wp.split(",").map(Number);
+  //             return { lat, lng };
+  //           });
+  //           stops.push(...waypoints);
+  //         });
+  //         setStops(stops);
+  //       }
+  //     } catch (error) {
+  //       console.error("Failed to fetch stops:", error);
+  //     }
+  //   };
+
+  //   // Immediately invoke the fetch functions
+  //   fetchStops();
+  // }, []); // Empty dependency array means this effect will run once after the component mounts
+
+  //---------------------------------------------------------------------------------------------------------
   useEffect(() => {
-    const fetchWaypoints = async () => {
+    const fetchWaypoints = async (missionId) => {
       try {
         const response = await fetch(
           "http://3.145.131.67:8000/api/dronestatus/"
         );
-        const data = await response.json();
-        if (Array.isArray(data)) {
-          // Optionally set the hexacopter's initial position to the first waypoint
-          if (data.length > 0) {
-            const firstWaypoint = {
-              lat: parseFloat(data[0].latitude),
-              lng: parseFloat(data[0].longitude),
-            };
-            if (!isNaN(firstWaypoint.lat) && !isNaN(firstWaypoint.lng)) {
-              setHexacopterPosition(firstWaypoint);
-            }
+        const allStatuses = await response.json();
+        // Assuming each drone status includes a mission ID, filter statuses by the active mission ID
+        const data = allStatuses.filter(
+          (status) => status.mission === missionId
+        );
+
+        if (Array.isArray(data) && data.length > 0) {
+          // Set the hexacopter's initial position to the first waypoint of the active mission
+          const firstWaypoint = {
+            lat: parseFloat(data[0].latitude),
+            lng: parseFloat(data[0].longitude),
+          };
+          if (!isNaN(firstWaypoint.lat) && !isNaN(firstWaypoint.lng)) {
+            setHexacopterPosition(firstWaypoint);
           }
 
           for (let waypoint of data) {
@@ -88,102 +162,34 @@ const TrackingMap = () => {
       }
     };
 
-    fetchWaypoints();
-
+    // The call to fetchWaypoints is now moved inside fetchStops
+    // after determining the active mission and its ID
     const fetchStops = async () => {
       try {
         const response = await fetch("http://3.145.131.67:8000/api/missions/");
-        const data = await response.json();
-        if (Array.isArray(data)) {
-          const stops = [];
-          data.forEach((mission) => {
-            const waypoints = mission.waypoints.split(";").map((wp) => {
-              const [lat, lng] = wp.split(",").map(Number);
-              return { lat, lng };
-            });
-            stops.push(...waypoints);
+        const missions = await response.json();
+        const activeMission = missions.find(
+          (mission) => mission.mission_status === "In Progress"
+        );
+        if (activeMission) {
+          const stops = activeMission.waypoints.split(";").map((wp) => {
+            const [lat, lng] = wp.trim().split(",").map(Number);
+            return { lat, lng };
           });
           setStops(stops);
+          // Call fetchWaypoints with the ID of the active mission
+          fetchWaypoints(activeMission.id);
+        } else {
+          console.log("No mission is currently 'In Progress'");
         }
       } catch (error) {
         console.error("Failed to fetch stops:", error);
       }
     };
 
-    // Immediately invoke the fetch functions
+    // Initially, call fetchStops to determine the active mission and subsequently fetch waypoints
     fetchStops();
-  }, []); // Empty dependency array means this effect will run once after the component mounts
-
-  //---------------------------------------------------------------------------------------------------------
-  // useEffect(() => {
-  //   const fetchWaypoints = async (missionId) => {
-  //     try {
-  //       const response = await fetch("http://3.145.131.67:8000/api/dronestatus/");
-  //       const allStatuses = await response.json();
-  //       // Assuming each drone status includes a mission ID, filter statuses by the active mission ID
-  //       const data = allStatuses.filter(status => status.mission === missionId);
-
-  //       if (Array.isArray(data) && data.length > 0) {
-  //         // Set the hexacopter's initial position to the first waypoint of the active mission
-  //         const firstWaypoint = {
-  //           lat: parseFloat(data[0].latitude),
-  //           lng: parseFloat(data[0].longitude),
-  //         };
-  //         if (!isNaN(firstWaypoint.lat) && !isNaN(firstWaypoint.lng)) {
-  //           setHexacopterPosition(firstWaypoint);
-  //         }
-
-  //         for (let waypoint of data) {
-  //           const parsedWaypoint = {
-  //             lat: parseFloat(waypoint.latitude),
-  //             lng: parseFloat(waypoint.longitude),
-  //           };
-
-  //           if (!isNaN(parsedWaypoint.lat) && !isNaN(parsedWaypoint.lng)) {
-  //             await delay(1000); // Delay of 1 second between each waypoint
-
-  //             // Update the hexacopter's position to simulate movement
-  //             setHexacopterPosition(parsedWaypoint);
-
-  //             // Incrementally build up the polyline path
-  //             setWaypoints((prevWaypoints) => [
-  //               ...prevWaypoints,
-  //               parsedWaypoint,
-  //             ]);
-  //           }
-  //         }
-  //       }
-  //     } catch (error) {
-  //       console.error("Failed to fetch waypoints:", error);
-  //     }
-  //   };
-
-  //   // The call to fetchWaypoints is now moved inside fetchStops
-  //   // after determining the active mission and its ID
-  //   const fetchStops = async () => {
-  //     try {
-  //       const response = await fetch("http://3.145.131.67:8000/api/missions/");
-  //       const missions = await response.json();
-  //       const activeMission = missions.find(mission => mission.mission_status === "In Progress");
-  //       if (activeMission) {
-  //         const stops = activeMission.waypoints.split(';').map((wp) => {
-  //           const [lat, lng] = wp.trim().split(',').map(Number);
-  //           return { lat, lng };
-  //         });
-  //         setStops(stops);
-  //         // Call fetchWaypoints with the ID of the active mission
-  //         fetchWaypoints(activeMission.id);
-  //       } else {
-  //         console.log("No mission is currently 'In Progress'");
-  //       }
-  //     } catch (error) {
-  //       console.error("Failed to fetch stops:", error);
-  //     }
-  //   };
-
-  //   // Initially, call fetchStops to determine the active mission and subsequently fetch waypoints
-  //   fetchStops();
-  // }, []); // Dependency array is empty, so this effect runs once after the component mounts
+  }, []); // Dependency array is empty, so this effect runs once after the component mounts
 
   //---------------------------------------------------------------------------------------------------------
 
@@ -208,7 +214,7 @@ const TrackingMap = () => {
       <GoogleMap
         mapContainerStyle={containerStyle}
         center={center}
-        zoom={19.5}
+        zoom={18.5}
         options={mapOptions}
       >
         {waypoints.length > 0 && (
@@ -242,7 +248,7 @@ const TrackingMap = () => {
         )}
         {/* Render markers for stops */}
         {stops.map((stop, index) => (
-          <Marker key={index} position={stop} />
+          <Marker key={index} position={stop} options={{ visible: false }} />
         ))}
       </GoogleMap>
     </div>
