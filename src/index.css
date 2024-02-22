@@ -9,6 +9,20 @@
 body {
   background-color: #000;
 }
+/* Hide scrollbar for Chrome, Safari, and Edge */
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for Firefox */
+* {
+  scrollbar-width: none;
+}
+
+/* Optionally, for IE and Edge legacy */
+* {
+  -ms-overflow-style: none;
+}
 
 button:hover {
   color: #fff; /* originally #25c0e9 */
