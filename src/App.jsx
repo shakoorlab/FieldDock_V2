@@ -25,6 +25,12 @@ import DroneDashboard from "./components/Drone/Dashboard/DroneDash";
 
 import DroneLogsParent from "./components/Drone/Logs/DroneLogsParent";
 
+import { Box } from "@mui/material";
+import Grid from "@mui/material/Unstable_Grid2/Grid2";
+import SigninPage from "./components/Login/SigninPage";
+import TitleBox from "./components/Login/TitleBox";
+import LoginLayout from "./components/Layout/LoginLayout";
+
 const LayoutWithNavbar = () => (
   <Layout>
     <Navbar />
@@ -39,9 +45,32 @@ const App = () => {
     <Router>
       <LoadScript googleMapsApiKey={googleMapsApiKey}>
         <Routes>
+          <Route
+            path="/"
+            element={
+              <LoginLayout>
+                <Box
+                  sx={{
+                    width: {
+                      sm: "90vw",
+                      xs: "90vw",
+                      md: "60vw",
+                      lg: "60vw",
+                      xl: "60vw",
+                    },
+                  }}
+                >
+                  <Grid container height="90vh">
+                    <SigninPage />
+                    <TitleBox />
+                  </Grid>
+                </Box>
+              </LoginLayout>
+            }
+          />
           {/* Directly applying LayoutWithNavbar for routes that need the Navbar */}
           <Route element={<LayoutWithNavbar />}>
-            <Route path="/" element={<HomePage />} />
+            <Route path="/Home-Page" element={<HomePage />} />
             <Route path="/Imaging" element={<Imaging />} />
             <Route path="/Drone" element={<Drone />} />
             <Route path="/Sensors" element={<Sensors />} />
