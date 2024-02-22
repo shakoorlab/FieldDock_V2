@@ -3,6 +3,7 @@ import WindGrid from "./WindGrid";
 import AirGrid from "./AirGrid";
 import LightGrid from "./LightGrid";
 
+//!REACT ANIMATE IN HERE
 function EnvConds() {
   return (
     <>

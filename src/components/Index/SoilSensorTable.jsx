@@ -1,6 +1,7 @@
 // SensorDataTable.js
 import React from "react";
 
+//!REACT ANIMATE IN HERE
 const SoilSensorTable = () => {
   return (
     <table
