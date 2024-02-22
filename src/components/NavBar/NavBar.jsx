@@ -23,11 +23,13 @@ import DownloadNotActive from "../../assets/svg/download_not_active.svg";
 import DownloadActive from "../../assets/svg/download_active.svg";
 
 function Navbar() {
-  const [isHovered, setIsHovered] = useState(false);
   const navigate = useNavigate();
 
-  const navToHomePage = () => {
+  const navToLogin = () => {
     navigate("/");
+  };
+  const navToHomePage = () => {
+    navigate("/Home-Page");
   };
   const navToImaging = () => {
     navigate("/Imaging");
@@ -96,7 +98,9 @@ function Navbar() {
           <div className="row">
             <div className="user-action-container">
               <div className="active-user-name">User 0000 (----)</div>
-              <button className="log-out-button">Log Out</button>
+              <button onClick={navToLogin} className="log-out-button">
+                Log Out
+              </button>
             </div>
           </div>
           <div className="device-info">
