@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { styled, useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
+import { Modal } from "@mui/material";
 // import Grid from "@mui/material/Unstable_Grid2";
 import MuiDrawer from "@mui/material/Drawer";
 import MuiAppBar from "@mui/material/AppBar";
@@ -110,7 +111,27 @@ const Drawer = styled(MuiDrawer, {
   }),
 }));
 
+const modalStyle = {
+  position: "absolute",
+  top: "50%",
+  left: "51.5%",
+  borderRadius: "4px",
+  transform: "translate(-50%, -50%)",
+  width: "35%", //40% for bigger than 1700 screens
+  height: "30%", //45% for bigger than 1700 screens
+  border: "1.5px solid #e0e0e0",
+  boxShadow: "0 7px 5px 1px rgba(0, 0, 0, 0.2)",
+  p: 4,
+  background: "linear-gradient(1deg, rgba(0, 0, 0, 0.95), rgb(27, 27, 27))",
+  display: "flex",
+  flexDirection: "row",
+};
+
 export default function MiniDrawer() {
+  const [opent, setOpent] = useState(true); // Modal is initially closed
+
+  // const handleOpen = () => setOpen(true); // Function to open the modal
+  const handleClose = () => setOpent(false); // Function to close the modal
   const navigate = useNavigate();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -296,6 +317,49 @@ export default function MiniDrawer() {
       <Box component="main" sx={{ flexGrow: 1, p: 3, height: "100vh" }}>
         <DrawerHeader />
         {renderActivePageComponent()}
+        <Modal open={opent}>
+          <Box sx={modalStyle}>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: " center",
+                width: "100%",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+              <div
+                style={{
+                  color: "#797979",
+                  fontSize: "1.7rem",
+                  display: "flex",
+                  justifyContent: "center",
+                  opacity: "55%",
+                }}
+              >
+                Welcome to the Drone Mission Dashboard
+              </div>
+              <div
+                style={{
+                  color: "#797979",
+                  fontSize: "1.2rem",
+                  display: "flex",
+                  justifyContent: "center",
+                  opacity: "55%",
+                }}
+              >
+                Plan, edit, view, and track your missions here
+              </div>
+              <button
+                style={{ marginTop: "30px" }}
+                onClick={handleClose}
+                className="view-plan-button"
+              >
+                Continue
+              </button>
+            </div>
+          </Box>
+        </Modal>
         <div //! fix this so it doesnt appear on all page bottoms of drawer component
           style={{
             width: "100%",
