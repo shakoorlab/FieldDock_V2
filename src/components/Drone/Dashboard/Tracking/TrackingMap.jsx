@@ -3,6 +3,8 @@ import { GoogleMap, Polyline, Marker } from "@react-google-maps/api";
 import ExploreIcon from "@mui/icons-material/Explore";
 // import CircularProgressWithLabel from "@mui/material/CircularProgress";
 import BatteryFullIcon from "@mui/icons-material/BatteryFull";
+import SpeedIcon from "@mui/icons-material/Speed";
+import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
 // import Battery80Icon from '@mui/icons-material/Battery80';
 // import Battery60Icon from '@mui/icons-material/Battery60';
 // import Battery30Icon from '@mui/icons-material/Battery30';
@@ -18,10 +20,7 @@ const containerStyle = {
 };
 
 // This can be defined outside if it doesn't change
-const defaultCenter = {
-  lat: -34.397,
-  lng: 150.644,
-};
+
 const hexacopterIcon = "src/assets/icons/hexacopter_icon.png";
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -35,6 +34,11 @@ const TrackingMap = () => {
 
   // Additional state for the hexacopter's current position
   const [hexacopterPosition, setHexacopterPosition] = useState(null);
+  const [missionId, setMissionId] = useState(null);
+  const [batteryPercentage, setBatteryPercentage] = useState(100);
+  const [speed, setSpeed] = useState(0);
+  const [altitude, setAltitude] = useState(0);
+  const [missionDuration, setMissionDuration] = useState("");
 
   // Helper function to create a delay
   // To achieve this, you can modify your fetchWaypoints function to iterate through
@@ -135,6 +139,10 @@ const TrackingMap = () => {
           };
           if (!isNaN(firstWaypoint.lat) && !isNaN(firstWaypoint.lng)) {
             setHexacopterPosition(firstWaypoint);
+            setBatteryPercentage(data[0].battery_percentage);
+            setSpeed(data[0].speed);
+            setAltitude(data[0].altitude);
+            setMissionDuration(data[0].mission_duration);
           }
 
           for (let waypoint of data) {
@@ -148,6 +156,10 @@ const TrackingMap = () => {
 
               // Update the hexacopter's position to simulate movement
               setHexacopterPosition(parsedWaypoint);
+              setBatteryPercentage(waypoint.battery_percentage);
+              setSpeed(waypoint.speed);
+              setAltitude(waypoint.altitude);
+              setMissionDuration(waypoint.mission_duration);
 
               // Incrementally build up the polyline path
               setWaypoints((prevWaypoints) => [
@@ -172,6 +184,7 @@ const TrackingMap = () => {
           (mission) => mission.mission_status === "In Progress"
         );
         if (activeMission) {
+          setMissionId(activeMission.id); // Update missionId state
           const stops = activeMission.waypoints.split(";").map((wp) => {
             const [lat, lng] = wp.trim().split(",").map(Number);
             return { lat, lng };
@@ -204,13 +217,21 @@ const TrackingMap = () => {
     streetViewControl: false, // This will hide the Street View Pegman (little orange person)
     fullscreenControl: false, // This will hide the fullscreen button
     zoomControl: false, // This will hide the zoom controls (+/- buttons)
+    mapTypeId: "satellite",
   };
   console.log("Waypoints:", waypoints);
   console.log("Stops:", stops);
   return (
     <div style={containerStyle}>
-      {showMissionBox && <MissionBox onClose={handleCloseClick} />}
-      <BottomOverlay />
+      {showMissionBox && (
+        <MissionBox missionId={missionId} onClose={handleCloseClick} />
+      )}
+      <BottomOverlay
+        missionDuration={missionDuration}
+        batteryPercentage={batteryPercentage}
+        speed={speed}
+        altitude={altitude}
+      />
       <GoogleMap
         mapContainerStyle={containerStyle}
         center={center}
@@ -254,7 +275,43 @@ const TrackingMap = () => {
     </div>
   );
 };
-function MissionBox({ onClose }) {
+
+function FlashingButton() {
+  return (
+    <>
+      <style>
+        {`
+            @keyframes flashAnimation {
+              0% {
+                background-color: darkgreen;
+              }
+              50% {
+                background-color: lightgreen;
+              }
+              100% {
+                background-color: darkgreen;
+              }
+            }
+  
+            .flashButton {
+              animation: flashAnimation 4s infinite;
+              background-color: darkgreen;
+              border: none;
+              border-radius: 20px;
+              color: white;
+              font-weight: bold;
+              padding: 10px 20px;
+              cursor: pointer;
+              margin-right: 10px; /* Add some margin to the right of the button */
+            }
+          `}
+      </style>
+      <button className="flashButton">Active</button>
+    </>
+  );
+}
+
+function MissionBox({ onClose, missionId }) {
   return (
     <div
       style={{
@@ -273,27 +330,21 @@ function MissionBox({ onClose }) {
         minHeight: "80px", // Increase width to fit the new button
       }}
     >
-      <span style={{ marginRight: "auto", fontSize: "2rem" }}>Mission 001</span>{" "}
+      <span style={{ marginRight: "auto", fontSize: "2rem" }}>
+        Mission 00{missionId}
+      </span>{" "}
       {/* This will push the close button to the end */}
-      <button
-        style={{
-          backgroundColor: "darkgreen",
-          border: "none",
-          borderRadius: "20px",
-          color: "white",
-          fontWeight: "bold",
-          padding: "10px 20px",
-          cursor: "pointer",
-          marginRight: "10px", // Add some margin to the right of the button
-        }}
-      >
-        Active
-      </button>
+      <FlashingButton />
     </div>
   );
 }
 
-function BottomOverlay() {
+function BottomOverlay({
+  missionDuration,
+  batteryPercentage,
+  speed,
+  altitude,
+}) {
   const splitBoxStyle = {
     display: "flex",
     flexDirection: "column",
@@ -379,10 +430,13 @@ function BottomOverlay() {
   const mediumTextStyle = {
     color: "white",
     fontSize: "1.5rem",
+    width: "23.5%",
+
     position: "absolute",
     justifyContent: "flex-start",
     padding: "5px 10px",
     fontWeight: "bold",
+    borderBottom: "1px solid #797979",
   };
   const mediumTextGraphStyle = {
     color: "white",
@@ -435,14 +489,7 @@ function BottomOverlay() {
           <div style={halfBoxStyle}>Mission Time Elapsed: 20 minutes</div>
           <div style={lastHalfBoxStyle}>
             <div style={progressStyle}>
-              Mission Time Remaining: 00:00:22
-              {/* <CircularProgressWithLabel
-                variant="determinate"
-                size={25}
-                thickness={8}
-                value={50}
-                sx={{ marginLeft: "25px" }}
-              /> */}
+              Mission Time Remaining: {missionDuration}
             </div>
           </div>
         </div>
@@ -453,7 +500,7 @@ function BottomOverlay() {
         <div style={innerBoxStyle}>
           <div style={textContainerStyle}>
             <div style={smallTextStyle}>Battery Health</div>
-            <div style={miniTextStyle}>76.82%</div>
+            <div style={miniTextStyle}>{batteryPercentage}%</div>
             <div style={extraMiniTextStyle}>Optimal</div>
           </div>
           <div
@@ -475,7 +522,7 @@ function BottomOverlay() {
         {/* Upper box */}
         <div style={innerBoxStyle}>
           <div style={textContainerStyle}>
-            <div style={smallTextStyle}>Air Temperature</div>
+            <div style={smallTextStyle}>Weather Conditions</div>
             <div style={miniTextStyle}>76 F | 48 C</div>
             <div style={extraMiniTextStyle}>Northeast</div>
           </div>
@@ -498,15 +545,56 @@ function BottomOverlay() {
         {/* Lower box */}
       </div>
       {/* These two boxes remain unsplit */}
-      <div style={innerBoxGraphStyle}>
-        <div style={mediumTextGraphStyle}>Drone Altitude</div>
-
-        {/* <BarAnimation /> */}
-        {/* <div style={miniTextStyle}>50 Meters</div> */}
+      <div style={splitBoxStyle}>
+        <div style={innerBoxStyle}>
+          <div style={textContainerStyle}>
+            <div style={smallTextStyle}>Drone Altitude</div>
+            <div style={miniTextStyle}>{altitude}m</div>
+            <div style={extraMiniTextStyle}>Relative</div>
+          </div>
+          <div
+            style={{
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <FlightTakeoffIcon
+              style={{
+                color: "lightgray",
+                fontSize: "5.5rem",
+                marginRight: "30px",
+                marginTop: "5px",
+              }}
+            />
+          </div>
+        </div>
+        {/* Upper box */}
+        <div style={innerBoxStyle}>
+          <div style={textContainerStyle}>
+            <div style={smallTextStyle}>Drone Speed</div>
+            <div style={miniTextStyle}>{speed}m/s</div>
+            {/* <div style={extraMiniTextStyle}>Northeast</div> */}
+          </div>
+          <div
+            style={{
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <SpeedIcon
+              style={{
+                color: "lightgray",
+                fontSize: "5.5rem",
+                marginRight: "30px",
+                marginTop: "5px",
+              }}
+            />
+          </div>
+        </div>
       </div>
       {/* Third box */}
       <div style={innerBoxStyle}>
-        <div style={mediumTextStyle}></div>
+        <div style={mediumTextStyle}>Drone Status</div>
       </div>{" "}
       {/* Fourth box */}
     </div>
