@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Box, Modal } from "@mui/material";
+import CircularProgress from "@mui/material/CircularProgress";
 
 function NoMissionInProgress() {
   //--------------------logic for modal-----------------------------------
@@ -38,32 +39,33 @@ function NoMissionInProgress() {
             <div
               style={{
                 color: "#797979",
-                fontSize: "2rem",
+                fontSize: "2.5rem",
                 display: "flex",
                 justifyContent: "center",
                 opacity: "55%",
               }}
             >
-              No missions in progress
+              Loading Mission
             </div>
             <div
               style={{
                 color: "#797979",
-                fontSize: "1.2rem",
+                fontSize: "1.5rem",
                 display: "flex",
                 justifyContent: "center",
                 opacity: "55%",
               }}
             >
-              Please return to dashboard
+              Please wait
             </div>
-            <button
+            {/* <button
               style={{ marginTop: "30px" }}
               onClick={handleClose}
               className="view-plan-button"
             >
               Back
-            </button>
+            </button> */}
+            <CircularProgress sx={{ marginTop: "20px", color: "#48f7f5" }} />
           </div>
         </Box>
       </Modal>
