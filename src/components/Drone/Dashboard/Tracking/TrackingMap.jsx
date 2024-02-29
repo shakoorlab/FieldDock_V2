@@ -123,7 +123,7 @@ const TrackingMap = () => {
     const fetchWaypoints = async (missionId) => {
       try {
         const response = await fetch(
-          "http://3.145.131.67:8000/api/dronestatus/"
+          "http://18.190.158.132:8000/api/dronestatus/"
         );
         const allStatuses = await response.json();
         // Assuming each drone status includes a mission ID, filter statuses by the active mission ID
@@ -178,7 +178,9 @@ const TrackingMap = () => {
     // after determining the active mission and its ID
     const fetchStops = async () => {
       try {
-        const response = await fetch("http://3.145.131.67:8000/api/missions/");
+        const response = await fetch(
+          "http://18.190.158.132:8000/api/missions/"
+        );
         const missions = await response.json();
         const activeMission = missions.find(
           (mission) => mission.mission_status === "In Progress"
@@ -276,42 +278,75 @@ const TrackingMap = () => {
   );
 };
 
-function FlashingButton() {
+function FlashingButton({ flashing, children }) {
+  const buttonStyle = flashing
+    ? `
+      animation: flashAnimation 4s infinite;
+      background-color: darkgreen;`
+    : `background-color: green;`; // Solid color when not flashing
+
   return (
     <>
       <style>
         {`
-            @keyframes flashAnimation {
-              0% {
-                background-color: darkgreen;
-              }
-              50% {
-                background-color: lightgreen;
-              }
-              100% {
-                background-color: darkgreen;
-              }
-            }
-  
-            .flashButton {
-              animation: flashAnimation 4s infinite;
+          @keyframes flashAnimation {
+            0% {
               background-color: darkgreen;
-              border: none;
-              border-radius: 20px;
-              color: white;
-              font-weight: bold;
-              padding: 10px 20px;
-              cursor: pointer;
-              margin-right: 10px; /* Add some margin to the right of the button */
             }
-          `}
+            50% {
+              background-color: lightgreen;
+            }
+            100% {
+              background-color: darkgreen;
+            }
+          }
+
+          .flashButton {
+            ${buttonStyle}
+            border: none;
+            border-radius: 20px;
+            color: white;
+            font-weight: bold;
+            padding: 10px 20px;
+            cursor: pointer;
+            margin-right: 10px; /* Add some margin to the right of the button */
+          }
+        `}
       </style>
-      <button className="flashButton">Active</button>
+      <button className="flashButton">{children}</button>
     </>
   );
 }
 
 function MissionBox({ onClose, missionId }) {
+  const [status, setStatus] = useState("");
+  const [polling, setPolling] = useState(true);
+
+  useEffect(() => {
+    const pollStatus = async () => {
+      try {
+        const response = await fetch(
+          "http://18.190.158.132:8000/api/edgestatemachinestatus/"
+        );
+        const data = await response.json();
+        // Assuming the latest status is the last item in the array
+        const latestStatus = data[data.length - 1].status;
+        setStatus(latestStatus);
+
+        if (latestStatus === "Drone landed.") {
+          setPolling(false); // Stop polling
+        }
+      } catch (error) {
+        console.error("Failed to fetch status:", error);
+      }
+    };
+
+    if (polling) {
+      const intervalId = setInterval(pollStatus, 5000); // Poll every 5 seconds
+      return () => clearInterval(intervalId); // Cleanup interval on component unmount
+    }
+  }, [polling]); // Re-run effect if polling state changes
+
   return (
     <div
       style={{
@@ -326,15 +361,16 @@ function MissionBox({ onClose, missionId }) {
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
-        minWidth: "320px", // Increase width to fit the new button
-        minHeight: "80px", // Increase width to fit the new button
+        minWidth: "320px",
+        minHeight: "80px",
       }}
     >
       <span style={{ marginRight: "auto", fontSize: "2rem" }}>
         Mission 00{missionId}
-      </span>{" "}
-      {/* This will push the close button to the end */}
-      <FlashingButton />
+      </span>
+      <FlashingButton flashing={polling}>
+        {polling ? "Active" : "Complete"}
+      </FlashingButton>
     </div>
   );
 }
@@ -345,6 +381,21 @@ function BottomOverlay({
   speed,
   altitude,
 }) {
+  //------------------------------
+  const getBatteryStatus = (batteryPercentage) => {
+    if (batteryPercentage >= 80) {
+      return { text: "Optimal", color: "green" };
+    } else if (batteryPercentage >= 60 && batteryPercentage < 80) {
+      return { text: "Adequate", color: "yellow" };
+    } else {
+      return { text: "Needs to charge", color: "red" };
+    }
+  };
+
+  // Use the function to get the current battery status and color
+  const batteryStatus = getBatteryStatus(batteryPercentage);
+
+  //---------------------------------
   const splitBoxStyle = {
     display: "flex",
     flexDirection: "column",
@@ -501,7 +552,9 @@ function BottomOverlay({
           <div style={textContainerStyle}>
             <div style={smallTextStyle}>Battery Health</div>
             <div style={miniTextStyle}>{batteryPercentage}%</div>
-            <div style={extraMiniTextStyle}>Optimal</div>
+            <div style={{ ...extraMiniTextStyle, color: batteryStatus.color }}>
+              {batteryStatus.text}
+            </div>
           </div>
           <div
             style={{
