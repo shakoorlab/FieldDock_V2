@@ -289,7 +289,7 @@ export default function MiniDrawer() {
                   color: "#FFF",
                 }}
                 onClick={() => {
-                  if (text === "Home") navigate("/");
+                  if (text === "Home") navigate("/Home-Page");
                 }}
               >
                 <ListItemIcon
