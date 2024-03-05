@@ -5,7 +5,7 @@ export const fetchMissionStatus = createAsyncThunk(
   "mission/fetchStatus",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await fetch("http://3.145.131.67:8000/api/missions/");
+      const response = await fetch("http://3.15.191.116:8000/api/missions/");
       const missions = await response.json();
       // Check if any mission is "In Progress"
       const inProgressMission = missions.find(
