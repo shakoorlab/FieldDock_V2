@@ -5,6 +5,7 @@ import { createMission } from "./WaypointConfig";
 import LatLongTable from "../CreateMission/LatLongTable";
 import { setWaypoints } from "../../../../slices/waypointsSlice";
 import Map from "../CreateMission/MapComponent";
+import MissionSummary from "./MissionSummary";
 
 import {
   Box,
@@ -89,6 +90,7 @@ const CreateMissionDrawer = () => {
   //
   //---------------------logic for stepper----------------------------------
   const [activeStep, setActiveStep] = React.useState(0);
+  const [displaySummary, setDisplaySummary] = useState(false);
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -198,6 +200,7 @@ const CreateMissionDrawer = () => {
 
   const handleFinish = async () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    setDisplaySummary(true);
     // This prepares the waypoints data and dispatches it to the Redux store
     const waypointsData = data.map((item) => ({
       id: item.id,
@@ -233,7 +236,7 @@ const CreateMissionDrawer = () => {
     // Send data to the backend API
     try {
       const response = await axios.post(
-        "http://3.145.131.67:8000/api/missions/",
+        "http://3.15.191.116:8000/api/missions/",
         dataForAPI
       );
       console.log("Data sent to API:", response.data);
@@ -463,18 +466,15 @@ const CreateMissionDrawer = () => {
                   </button>
                   <Modal open={open} onClose={handleClose}>
                     <Box sx={modalStyle}>
-                      {/* Content inside modal */}
-
                       <Box
                         sx={{
                           display: "flex",
-                          width: "50%",
+                          width: "100%",
                           height: "100%",
                           bgcolor: "transparent",
-                          borderRight: "1px solid #797979", // Adds a border between the boxes
                         }}
                       >
-                        {/*//? STEPPER STARTS HERE (FIRST BOX)*/}
+                        {/* Stepper Starts Here */}
                         <Box sx={{ maxWidth: 400 }}>
                           <Stepper
                             activeStep={activeStep}
@@ -500,7 +500,7 @@ const CreateMissionDrawer = () => {
                                       {index < steps.length - 1 && (
                                         <Button
                                           variant="contained"
-                                          onClick={handleNext} // Continue with the next step
+                                          onClick={handleNext}
                                           sx={{ mt: 1, mr: 1 }}
                                         >
                                           Continue
@@ -509,7 +509,7 @@ const CreateMissionDrawer = () => {
                                       {index === steps.length - 1 && (
                                         <Button
                                           variant="contained"
-                                          onClick={handleFinish} // Handle finish logic
+                                          onClick={handleFinish}
                                           sx={{ mt: 1, mr: 1 }}
                                         >
                                           Finish
@@ -517,7 +517,7 @@ const CreateMissionDrawer = () => {
                                       )}
                                       <Button
                                         disabled={index === 0}
-                                        onClick={handleBack} // Go back to the previous step
+                                        onClick={handleBack}
                                         sx={{ mt: 1, mr: 1 }}
                                       >
                                         Back
@@ -532,10 +532,7 @@ const CreateMissionDrawer = () => {
                             <Paper
                               square
                               elevation={0}
-                              sx={{
-                                p: 1,
-                                background: "transparent",
-                              }}
+                              sx={{ p: 1, background: "transparent" }}
                             >
                               <Typography>
                                 All steps completed - your mission has been
@@ -567,66 +564,49 @@ const CreateMissionDrawer = () => {
                             </Paper>
                           )}
                         </Box>
-                      </Box>
-                      <Grow
-                        in={true}
-                        style={{ transformOrigin: "0 0 0" }}
-                        timeout={1100}
-                      >
-                        <Box
-                          sx={{
-                            width: "50%",
-                            height: "100%",
-                            display: "flex",
-                            flexDirection: "column",
-                            alignItems: "center",
-                            justifyContent: "center",
-                          }}
+                        {/* Conditional Rendering based on displaySummary */}
+                        <Grow
+                          in={true}
+                          style={{ transformOrigin: "0 0 0" }}
+                          timeout={1100}
                         >
-                          {/*//? TIME/DATE STARTS HERE (SECOND BOX)*/}
-                          <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <DateCalendar
-                              value={selectedDate}
-                              onChange={handleDateChange}
-                              showDaysOutsideCurrentMonth
-                              views={["day", "month"]}
-                              sx={{
-                                borderRadius: "4px",
-                                border: "1px solid #797979",
-                                boxShadow: "0 7px 5px 1px rgba(0, 0, 0, 0.2)",
-                                background:
-                                  "linear-gradient(1deg, rgba(0, 0, 0, 0), #1b1b1b)",
-                                marginBottom: "20px",
-                              }}
-                            />
-                            <Box
-                              sx={{
-                                display: "flex",
-                                width: "100%",
-                                justifyContent: "center",
-                              }}
-                            >
-                              <TimePicker
-                                value={selectedTime}
-                                onChange={handleTimeChange}
-                                label="Select a time.."
-                                name="Select a time.."
-                                sx={{
-                                  width: "83.5% !important",
-                                  borderRadius: "4px",
-                                  border: "1px solid #797979",
-                                  boxShadow: "0 7px 5px 1px rgba(0, 0, 0, 0.2)",
-                                  background:
-                                    "linear-gradient(1deg, rgba(0, 0, 0, 0), #1b1b1b)",
-                                  ".MuiSvgIcon-root": {
-                                    color: "#FFF",
-                                  },
-                                }}
-                              />
-                            </Box>
-                          </LocalizationProvider>
-                        </Box>
-                      </Grow>
+                          <Box
+                            sx={{
+                              width: "50%",
+                              display: "flex",
+                              flexDirection: "column",
+                              alignItems: "center",
+                              justifyContent: "center",
+                            }}
+                          >
+                            {displaySummary ? (
+                              <MissionSummary />
+                            ) : (
+                              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                <DateCalendar
+                                  value={selectedDate}
+                                  onChange={handleDateChange}
+                                  showDaysOutsideCurrentMonth
+                                  views={["day", "month"]}
+                                />
+                                <Box
+                                  sx={{
+                                    display: "flex",
+                                    width: "100%",
+                                    justifyContent: "center",
+                                  }}
+                                >
+                                  <TimePicker
+                                    value={selectedTime}
+                                    onChange={handleTimeChange}
+                                    label="Select a time.."
+                                  />
+                                </Box>
+                              </LocalizationProvider>
+                            )}
+                          </Box>
+                        </Grow>
+                      </Box>
                     </Box>
                   </Modal>
                 </div>
