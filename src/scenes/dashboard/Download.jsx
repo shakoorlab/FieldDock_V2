@@ -1,62 +1,31 @@
-import React from "react";
+import React, { useState, useRef, useEffect } from "react";
 import "../../css/download.css";
+import { CSVLink } from "react-csv";
 
 function Download() {
-  // Adjust how you call convertToCSV in fetchDataAndDownloadCSV
-  const fetchDataAndDownloadCSV = async (endpoint) => {
+  const [csvData, setCsvData] = useState([]);
+  const [readyForDownload, setReadyForDownload] = useState(false);
+  const csvLinkRef = useRef(); // Create a ref for the CSVLink
+
+  // Convert your data object to the format expected by react-csv (array of arrays or array of objects)
+  const fetchDataAndPrepareCSV = async (endpoint) => {
     try {
       const response = await fetch(endpoint);
-      const data = await response.json();
-      const csvString = convertToCSV(data); // Pass the single object directly
-      triggerDownload(csvString, "data.csv");
+      const data = await response.json(); // This data is assumed to be in the correct format for react-csv
+      setCsvData(data);
+      setReadyForDownload(true);
     } catch (error) {
       console.error("Error:", error);
     }
   };
-  // Adjusted convertToCSV function for a single object
-  const convertToCSV = (dataObject) => {
-    // Check if the dataObject is not empty
-    if (!Object.keys(dataObject).length) {
-      return "";
+
+  // Effect to trigger the download once the data is ready
+  useEffect(() => {
+    if (readyForDownload && csvLinkRef.current) {
+      csvLinkRef.current.link.click();
+      setReadyForDownload(false); // Optionally reset the state if needed
     }
-
-    // Extract column headers
-    const headers = Object.keys(dataObject).join(",") + "\n";
-
-    // Generate CSV row for the single object
-    const row = Object.values(dataObject)
-      .map((value) => {
-        // Convert null or undefined to empty string
-        if (value === null || value === undefined) {
-          return "";
-        }
-        // If the value is an object (and not a Date), convert to a string
-        // You might need to handle complex objects differently
-        if (typeof value === "object" && !(value instanceof Date)) {
-          return JSON.stringify(value).replace(/"/g, "'");
-        }
-        // Escape double quotes in the value
-        const escapedValue = value.toString().replace(/"/g, '""');
-        // Enclose the value in double quotes if it contains a comma, line break, or double quote
-        return /[\n",]/.test(escapedValue) ? `"${escapedValue}"` : escapedValue;
-      })
-      .join(",");
-
-    return headers + row;
-  };
-
-  // Function to trigger CSV download
-  const triggerDownload = (csvString, filename) => {
-    const blob = new Blob([csvString], { type: "text/csv;charset=utf-8;" });
-    const link = document.createElement("a");
-    const url = URL.createObjectURL(blob);
-    link.setAttribute("href", url);
-    link.setAttribute("download", filename);
-    link.style.visibility = "hidden";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
+  }, [readyForDownload]);
 
   return (
     <>
@@ -86,13 +55,25 @@ function Download() {
                 <input type="text" id="end-date" placeholder="End Date" />
                 <button
                   onClick={() =>
-                    fetchDataAndDownloadCSV(
-                      "http://18.190.158.132:8000/api/plotindices/"
+                    fetchDataAndPrepareCSV(
+                      "http://3.15.191.116:8000/api/plotindices/"
                     )
                   }
                 >
                   Download
                 </button>
+                {readyForDownload && (
+                  <CSVLink
+                    data={csvData}
+                    filename="plot-indices-data.csv"
+                    className="hidden-csv-link"
+                    ref={csvLinkRef}
+                    target="_blank"
+                    style={{ display: "none" }} // Hide the CSVLink component
+                  >
+                    Download
+                  </CSVLink>
+                )}
               </div>
             </div>
           </div>
