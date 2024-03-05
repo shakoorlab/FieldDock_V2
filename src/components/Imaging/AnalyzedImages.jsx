@@ -64,9 +64,7 @@ function AnalyzedImages() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(
-          "http://18.190.158.132:8000/api/imageout/"
-        ); // Adjust URL
+        const response = await fetch("http://3.15.191.116:8000/api/imageout/"); // Adjust URL
         const data = await response.json();
         const processedData = data.map((mission) => ({
           id: mission.id.toString(),

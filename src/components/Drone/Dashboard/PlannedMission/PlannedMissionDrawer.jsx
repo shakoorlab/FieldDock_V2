@@ -17,9 +17,7 @@ function PlannedMissionDrawer() {
   useEffect(() => {
     const fetchMissions = async () => {
       try {
-        const response = await fetch(
-          "http://18.190.158.132:8000/api/missions/"
-        );
+        const response = await fetch("http://3.15.191.116:8000/api/missions/");
         const missionsData = await response.json();
 
         // Filter missions by status 'Planned'

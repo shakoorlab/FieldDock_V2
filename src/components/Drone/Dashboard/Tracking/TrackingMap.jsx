@@ -123,7 +123,7 @@ const TrackingMap = () => {
     const fetchWaypoints = async (missionId) => {
       try {
         const response = await fetch(
-          "http://18.190.158.132:8000/api/dronestatus/"
+          "http://3.15.191.116:8000/api/dronestatus/"
         );
         const allStatuses = await response.json();
         // Assuming each drone status includes a mission ID, filter statuses by the active mission ID
@@ -178,9 +178,7 @@ const TrackingMap = () => {
     // after determining the active mission and its ID
     const fetchStops = async () => {
       try {
-        const response = await fetch(
-          "http://18.190.158.132:8000/api/missions/"
-        );
+        const response = await fetch("http://3.15.191.116:8000/api/missions/");
         const missions = await response.json();
         const activeMission = missions.find(
           (mission) => mission.mission_status === "In Progress"
