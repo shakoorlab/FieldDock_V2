@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { GoogleMap, Polyline, Marker } from "@react-google-maps/api";
-import ExploreIcon from "@mui/icons-material/Explore";
+import AutoModeIcon from "@mui/icons-material/AutoMode";
 // import CircularProgressWithLabel from "@mui/material/CircularProgress";
 import BatteryFullIcon from "@mui/icons-material/BatteryFull";
 import SpeedIcon from "@mui/icons-material/Speed";
 import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
+import WindGrid from "../../../Index/WindGrid";
 // import Battery80Icon from '@mui/icons-material/Battery80';
 // import Battery60Icon from '@mui/icons-material/Battery60';
 // import Battery30Icon from '@mui/icons-material/Battery30';
@@ -218,6 +219,9 @@ const TrackingMap = () => {
     fullscreenControl: false, // This will hide the fullscreen button
     zoomControl: false, // This will hide the zoom controls (+/- buttons)
     mapTypeId: "satellite",
+    rotateControl: false,
+    scaleControl: false,
+    panControl: false,
   };
   console.log("Waypoints:", waypoints);
   console.log("Stops:", stops);
@@ -235,7 +239,7 @@ const TrackingMap = () => {
       <GoogleMap
         mapContainerStyle={containerStyle}
         center={center}
-        zoom={18.5}
+        zoom={30}
         options={mapOptions}
       >
         {waypoints.length > 0 && (
@@ -324,7 +328,7 @@ function MissionBox({ onClose, missionId }) {
     const pollStatus = async () => {
       try {
         const response = await fetch(
-          "http://18.190.158.132:8000/api/edgestatemachinestatus/"
+          "http://3.15.191.116:8000/api/edgestatemachinestatus/"
         );
         const data = await response.json();
         // Assuming the latest status is the last item in the array
@@ -363,7 +367,9 @@ function MissionBox({ onClose, missionId }) {
         minHeight: "80px",
       }}
     >
-      <span style={{ marginRight: "auto", fontSize: "2rem" }}>
+      <span
+        style={{ marginRight: "auto", fontSize: "2rem", marginRight: "20px" }}
+      >
         Mission 00{missionId}
       </span>
       <FlashingButton flashing={polling}>
@@ -379,10 +385,41 @@ function BottomOverlay({
   speed,
   altitude,
 }) {
+  const [droneStatus, setDroneStatus] = useState("");
+
+  useEffect(() => {
+    // Function to fetch data
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          "http://3.15.191.116:8000/api/edgestatemachinestatus/"
+        );
+        const data = await response.json();
+
+        if (data.length > 0) {
+          const latestStatus = data[data.length - 1].status;
+          setDroneStatus(latestStatus);
+        }
+      } catch (error) {
+        console.error("Failed to fetch data:", error);
+        setDroneStatus("Failed to fetch status"); // Assuming setStatus was meant to be setDroneStatus
+      }
+    };
+
+    // Immediately invoke fetchData to get the initial data
+    fetchData();
+
+    // Set up the interval to fetch data every 5 seconds
+    const intervalId = setInterval(fetchData, 5000);
+
+    // Clean up the interval on component unmount
+    return () => clearInterval(intervalId);
+  }, []); // Empty dependency array means this effect runs once on mount and cleanup on unmount
+
   //------------------------------
   const getBatteryStatus = (batteryPercentage) => {
     if (batteryPercentage >= 80) {
-      return { text: "Optimal", color: "green" };
+      return { text: "Optimal", color: "lightgreen" };
     } else if (batteryPercentage >= 60 && batteryPercentage < 80) {
       return { text: "Adequate", color: "yellow" };
     } else {
@@ -405,20 +442,11 @@ function BottomOverlay({
   // Style for the individual inner split boxes
   const innerBoxStyle = {
     backgroundColor: "rgba(121, 121, 121, 0.6)",
-    flex: 1,
+    flex: 0.7,
     margin: "0.5%",
     borderRadius: "5px",
     display: "flex",
     flexDirection: "row", // Change to row for horizontal layout
-    justifyContent: "space-between", // Distribute space between text and icon
-  };
-  const innerBoxGraphStyle = {
-    backgroundColor: "rgba(121, 121, 121, 0.6)",
-    flex: 1,
-    margin: "0.5%",
-    borderRadius: "5px",
-    display: "flex",
-    flexDirection: "column", // Change to row for horizontal layout
     justifyContent: "space-between", // Distribute space between text and icon
   };
   const doubleBoxStyle = {
@@ -464,14 +492,26 @@ function BottomOverlay({
     padding: "0px 10px",
     fontStyle: "italic",
   };
+  const extraMiniTextStyleGreen = {
+    color: "lightgreen",
+    fontSize: "1rem",
+    padding: "0px 10px",
+    fontStyle: "italic",
+  };
   const miniTextStyle = {
     color: "lightgray",
     fontSize: "1.3rem",
     padding: "0px 10px",
     marginTop: "-8px",
   };
+  const miniTextStyleDrone = {
+    color: "lightgray",
+    fontSize: "1rem",
+    padding: "0px 10px",
+    marginTop: "-5px",
+  };
   const smallTextStyle = {
-    color: "white",
+    color: "#FFF",
     fontSize: "1.4rem",
     fontWeight: "bold",
     padding: "5px 10px",
@@ -499,7 +539,7 @@ function BottomOverlay({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    fontSize: "1rem", // Example font size
+    fontSize: "1.1rem", // Example font size
     color: "#fff", // Example text color
     borderTop: "none", // White line between the boxes
     padding: "1rem", // Optional padding inside the boxes
@@ -548,7 +588,7 @@ function BottomOverlay({
       <div style={splitBoxStyle}>
         <div style={innerBoxStyle}>
           <div style={textContainerStyle}>
-            <div style={smallTextStyle}>Battery Health</div>
+            <div style={smallTextStyle}>Drone Battery</div>
             <div style={miniTextStyle}>{batteryPercentage}%</div>
             <div style={{ ...extraMiniTextStyle, color: batteryStatus.color }}>
               {batteryStatus.text}
@@ -570,12 +610,38 @@ function BottomOverlay({
             />
           </div>
         </div>
+        <style>
+          {`
+          @keyframes loadingDots {
+            0% { content: 'Receiving.'; }
+            33% { content: 'Receiving..'; }
+            66% { content: 'Receiving...'; }
+            100% { content: 'Receiving'; }
+          }
+
+          .extraMiniTextStyle::after {
+            content: '';
+            animation: loadingDots 1.5s infinite;
+            color: lightgreen;
+            
+          }
+        `}
+        </style>
         {/* Upper box */}
         <div style={innerBoxStyle}>
           <div style={textContainerStyle}>
-            <div style={smallTextStyle}>Weather Conditions</div>
-            <div style={miniTextStyle}>76 F | 48 C</div>
-            <div style={extraMiniTextStyle}>Northeast</div>
+            <div style={smallTextStyle}>Drone Status</div>
+            <div style={miniTextStyleDrone}>{droneStatus} </div>
+            {droneStatus === "Drone landed." ? (
+              <div style={{ ...extraMiniTextStyle, color: "lightgreen" }}>
+                Transmission Complete
+              </div>
+            ) : (
+              <div
+                style={extraMiniTextStyle}
+                className="extraMiniTextStyle"
+              ></div>
+            )}
           </div>
           <div
             style={{
@@ -583,7 +649,7 @@ function BottomOverlay({
               alignItems: "center",
             }}
           >
-            <ExploreIcon
+            <AutoModeIcon
               style={{
                 color: "lightgray",
                 fontSize: "5.5rem",
@@ -601,7 +667,7 @@ function BottomOverlay({
           <div style={textContainerStyle}>
             <div style={smallTextStyle}>Drone Altitude</div>
             <div style={miniTextStyle}>{altitude}m</div>
-            <div style={extraMiniTextStyle}>Relative</div>
+            <div style={extraMiniTextStyleGreen}>Relative</div>
           </div>
           <div
             style={{
@@ -624,7 +690,7 @@ function BottomOverlay({
           <div style={textContainerStyle}>
             <div style={smallTextStyle}>Drone Speed</div>
             <div style={miniTextStyle}>{speed}m/s</div>
-            {/* <div style={extraMiniTextStyle}>Northeast</div> */}
+            <div style={extraMiniTextStyleGreen}>Normal</div>
           </div>
           <div
             style={{
@@ -645,8 +711,128 @@ function BottomOverlay({
       </div>
       {/* Third box */}
       <div style={innerBoxStyle}>
-        <div style={mediumTextStyle}>Drone Status</div>
-      </div>{" "}
+        <div style={textContainerStyle}>
+          <div style={mediumTextStyle}>Weather Checks</div>
+          {/* Flex container for columns */}
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              width: "100%",
+              marginLeft: "10px",
+              justifyContent: "flex-start",
+              alignItems: "flex-start", // Align items to start on the cross axis
+              marginTop: "50px",
+            }}
+          >
+            {/* First Column */}
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
+              }}
+            >
+              <div style={{ color: "lightgray", fontSize: "1.23rem" }}>
+                Wind Speed:
+              </div>
+              <div
+                style={{
+                  color: "lightgreen",
+                  marginLeft: "58px",
+                  fontSize: "1.2rem",
+                }}
+              >
+                Optimal
+              </div>
+            </div>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
+              }}
+            >
+              <div style={{ color: "lightgray", fontSize: "1.23rem" }}>
+                Wind Direction:
+              </div>
+              <div
+                style={{
+                  color: "lightgreen",
+                  marginLeft: "35px",
+                  fontSize: "1.2rem",
+                }}
+              >
+                North
+              </div>
+            </div>
+            {/* Second Column */}
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
+              }}
+            >
+              <div style={{ color: "lightgray", fontSize: "1.23rem" }}>
+                Thunderstorms:
+              </div>
+              <div
+                style={{
+                  color: "lightgreen",
+                  marginLeft: "28px",
+                  fontSize: "1.2rem",
+                }}
+              >
+                None
+              </div>
+            </div>
+            {/* Third Column */}
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
+              }}
+            >
+              <div style={{ color: "lightgray", fontSize: "1.23rem" }}>
+                Percip. Chance:
+              </div>
+              <div
+                style={{
+                  color: "lightgreen",
+                  marginLeft: "30px",
+                  fontSize: "1.2rem",
+                }}
+              >
+                Low
+              </div>
+            </div>
+            {/* Fourth Column */}
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
+              }}
+            >
+              <div style={{ color: "lightgray", fontSize: "1.23rem" }}>
+                Visibiliy:
+              </div>
+              <div
+                style={{
+                  color: "orange",
+                  marginLeft: "95px",
+                  fontSize: "1.2rem",
+                }}
+              >
+                Medium
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Fourth box */}
     </div>
   );
